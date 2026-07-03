@@ -13,6 +13,9 @@ import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 
 import { AppToaster } from "./components/ui/AppToaster";
+import { initializeAnalytics } from "./services/GoogleAnalyticsService.js";
+
+initializeAnalytics();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

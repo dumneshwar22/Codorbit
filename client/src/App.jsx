@@ -18,7 +18,17 @@ import ResumeAnalysis from "./pages/ResumeAnalysis";
 import SavedQuestionsPage from "./pages/SavedQuestionsPage";
 import PublicRoute from "./components/PublicRoute";
 
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+
+import { trackPageView } from "./services/analyticsService";
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location]);
+
   return (
     <BrowserRouter>
       <Routes>
