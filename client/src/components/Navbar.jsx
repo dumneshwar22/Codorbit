@@ -28,7 +28,7 @@ const Navbar = () => {
   return (
     <header
       className="
-      h-18
+      h-15
 
       bg-white
       dark:bg-slate-900
