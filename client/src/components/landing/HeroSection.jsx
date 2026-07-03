@@ -100,7 +100,7 @@ const HeroSection = () => {
               duration-300
               "
             >
-              Continue with Google
+              Create Account
             </Link>
 
             <a
