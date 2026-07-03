@@ -1,5 +1,6 @@
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
+import LandingFooter from "../components/landing/LandingFooter";
 
 const DashboardLayout = ({ children }) => {
   return (
@@ -48,6 +49,8 @@ const DashboardLayout = ({ children }) => {
             {children}
           </div>
         </main>
+
+        <LandingFooter/>
       </div>
     </div>
     

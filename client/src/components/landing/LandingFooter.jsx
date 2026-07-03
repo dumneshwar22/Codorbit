@@ -34,7 +34,7 @@ const LandingFooter = () => {
 
         <div className="max-w-sm">
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
-            CodOrbit AI
+            CodOrbit
           </h3>
 
           <p className="mt-3 leading-7 text-slate-600 dark:text-slate-400">
@@ -151,7 +151,7 @@ const LandingFooter = () => {
           "
         >
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            © 2026 CodOrbit AI. All rights reserved.
+            © 2026 CodOrbit. All rights reserved.
           </p>
 
           <p className="text-sm text-slate-500 dark:text-slate-400">
