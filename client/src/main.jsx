@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { HelmetProvider } from "react-helmet-async";
 
 import App from "./App";
 
@@ -15,13 +16,17 @@ import { AppToaster } from "./components/ui/AppToaster";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ThemeProvider>
-      <AuthProvider>
-        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-          <App />
-          <AppToaster />
-        </GoogleOAuthProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <GoogleOAuthProvider
+            clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+          >
+            <App />
+            <AppToaster />
+          </GoogleOAuthProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   </React.StrictMode>,
 );

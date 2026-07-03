@@ -38,6 +38,7 @@ import SkillAnalysisCard from "../components/SkillAnalysisCard";
 
 import SectionHeader from "../components/ui/SectionHeader";
 import { BookOpen } from "lucide-react";
+import SEO from "../components/common/SEO";
 
 const DSATracker = () => {
   const [loading, setLoading] = useState(true);
@@ -217,44 +218,60 @@ const DSATracker = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
-        <div className="space-y-8">
-          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div className="space-y-3 flex-1">
-                <div className="h-4 w-28 animate-pulse rounded-xl bg-slate-200 dark:bg-slate-800" />
-                <div className="h-8 w-56 animate-pulse rounded-xl bg-slate-200 dark:bg-slate-800" />
+      <>
+        <SEO
+          title="DSA Tracker"
+          description="Track your DSA sheet progress, solved questions, coding streaks and placement preparation."
+          canonical="/dsa-tracker"
+          noIndex={true}
+        />
+        <DashboardLayout>
+          <div className="space-y-8">
+            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div className="space-y-3 flex-1">
+                  <div className="h-4 w-28 animate-pulse rounded-xl bg-slate-200 dark:bg-slate-800" />
+                  <div className="h-8 w-56 animate-pulse rounded-xl bg-slate-200 dark:bg-slate-800" />
+                </div>
+                <div className="h-12 w-full max-w-xs animate-pulse rounded-2xl bg-slate-200 dark:bg-slate-800" />
               </div>
-              <div className="h-12 w-full max-w-xs animate-pulse rounded-2xl bg-slate-200 dark:bg-slate-800" />
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <StatCardSkeleton key={index} />
+              ))}
+            </div>
+
+            <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+              <ModuleAccordionSkeleton count={6} />
+              <div className="space-y-6">
+                <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+                  <div className="h-4 w-32 animate-pulse rounded-xl bg-slate-200 dark:bg-slate-800" />
+                  <div className="mt-4 h-24 w-full animate-pulse rounded-2xl bg-slate-200 dark:bg-slate-800" />
+                </div>
+                <DifficultyAnalyticsSkeleton />
+              </div>
             </div>
           </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, index) => (
-              <StatCardSkeleton key={index} />
-            ))}
-          </div>
-
-          <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-            <ModuleAccordionSkeleton count={6} />
-            <div className="space-y-6">
-              <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
-                <div className="h-4 w-32 animate-pulse rounded-xl bg-slate-200 dark:bg-slate-800" />
-                <div className="mt-4 h-24 w-full animate-pulse rounded-2xl bg-slate-200 dark:bg-slate-800" />
-              </div>
-              <DifficultyAnalyticsSkeleton />
-            </div>
-          </div>
-        </div>
-      </DashboardLayout>
+        </DashboardLayout>
+      </>
     );
   }
 
   if (activeSheets.length === 0) {
     return (
-      <DashboardLayout>
-        <div
-          className="
+      <>
+        <SEO
+          title="DSA Tracker"
+          description="Track your DSA sheet progress, solved questions, coding streaks and placement preparation."
+          canonical="/dsa-tracker"
+          noIndex={true}
+        />
+
+        <DashboardLayout>
+          <div
+            className="
         flex
         flex-col
         items-center
@@ -264,34 +281,34 @@ const DSATracker = () => {
 
         text-center
         "
-        >
-          <h1
-            className="
+          >
+            <h1
+              className="
           text-4xl
           font-bold
 
           text-slate-900
           dark:text-white
           "
-          >
-            No Active Sheets
-          </h1>
+            >
+              No Active Sheets
+            </h1>
 
-          <p
-            className="
+            <p
+              className="
           mt-3
 
           text-slate-500
           dark:text-slate-400
           "
-          >
-            Activate a DSA sheet from Sheet Management to start tracking
-            progress.
-          </p>
+            >
+              Activate a DSA sheet from Sheet Management to start tracking
+              progress.
+            </p>
 
-          <a
-            href="/sheet-management"
-            className="
+            <a
+              href="/sheet-management"
+              className="
           mt-6
 
           px-6
@@ -307,11 +324,12 @@ const DSATracker = () => {
 
           transition-all
           "
-          >
-            Manage Sheets
-          </a>
-        </div>
-      </DashboardLayout>
+            >
+              Manage Sheets
+            </a>
+          </div>
+        </DashboardLayout>
+      </>
     );
   }
 
@@ -342,20 +360,27 @@ const DSATracker = () => {
   const currentOrder = currentSheet?.roadmap || Object.keys(groupedQuestions);
 
   return (
-    <DashboardLayout>
-      <div className="mb-10">
-        <div className="flex flex-col lg:flex-row gap-6">
-          <div>
-            <p className="text-slate-500 dark:text-slate-400 text-sm">
-              DSA Preparation
-            </p>
+    <>
+      <SEO
+        title="DSA Tracker"
+        description="Track your DSA sheet progress, solved questions, coding streaks and placement preparation."
+        canonical="/dsa-tracker"
+        noIndex={true}
+      />
+      <DashboardLayout>
+        <div className="mb-10">
+          <div className="flex flex-col lg:flex-row gap-6">
+            <div>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">
+                DSA Preparation
+              </p>
 
-            <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
-              {selectedSheet}
-            </h1>
+              <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
+                {selectedSheet}
+              </h1>
 
-            <div
-              className="
+              <div
+                className="
   mt-5
 
   flex
@@ -364,10 +389,10 @@ const DSATracker = () => {
 
   max-w-3xl
   "
-            >
-              <BookOpen
-                size={20}
-                className="
+              >
+                <BookOpen
+                  size={20}
+                  className="
     mt-0.5
 
     shrink-0
@@ -375,91 +400,95 @@ const DSATracker = () => {
     text-blue-600
     dark:text-blue-400
     "
-              />
+                />
 
-              <p
-                className="
+                <p
+                  className="
     leading-7
 
     text-slate-600
     dark:text-slate-400
     "
-              >
-                {currentSheet?.description}
-              </p>
+                >
+                  {currentSheet?.description}
+                </p>
+              </div>
+            </div>
+
+            <div className="lg:ml-auto">
+              <div className="mb-3">
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                  Active Sheet
+                </h3>
+
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  Switch between your learning tracks
+                </p>
+              </div>
+
+              <SheetSelector
+                sheets={activeSheets}
+                selectedSheet={selectedSheet}
+                setSelectedSheet={setSelectedSheet}
+              />
             </div>
           </div>
+        </div>
+        <div className="mt-12">
+          <SectionHeader
+            title="Performance Overview"
+            subtitle="Your progress across this sheet"
+          />
+          <div className=" mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <DSAStatCard
+              title="Total Questions"
+              value={progress?.totalQuestions || 0}
+            />
 
-          <div className="lg:ml-auto">
-            <div className="mb-3">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                Active Sheet
-              </h3>
+            <DSAStatCard
+              title="Solved"
+              value={progress?.solvedQuestions || 0}
+            />
 
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                Switch between your learning tracks
-              </p>
-            </div>
+            <DSAStatCard
+              title="Pending"
+              value={
+                (progress?.totalQuestions || 0) -
+                (progress?.solvedQuestions || 0)
+              }
+            />
 
-            <SheetSelector
-              sheets={activeSheets}
-              selectedSheet={selectedSheet}
-              setSelectedSheet={setSelectedSheet}
+            <DSAStatCard
+              title="Completion"
+              value={`${progress?.completionPercentage || 0}%`}
             />
           </div>
         </div>
-      </div>
-      <div className="mt-12">
-        <SectionHeader
-          title="Performance Overview"
-          subtitle="Your progress across this sheet"
-        />
-        <div className=" mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <DSAStatCard
-            title="Total Questions"
-            value={progress?.totalQuestions || 0}
+        <div className="mt-12">
+          <SectionHeader
+            title="DSA Roadmap"
+            subtitle={`${questions.length} questions available`}
           />
 
-          <DSAStatCard title="Solved" value={progress?.solvedQuestions || 0} />
-
-          <DSAStatCard
-            title="Pending"
-            value={
-              (progress?.totalQuestions || 0) - (progress?.solvedQuestions || 0)
-            }
-          />
-
-          <DSAStatCard
-            title="Completion"
-            value={`${progress?.completionPercentage || 0}%`}
-          />
+          <div className="mt-6 space-y-5">
+            {currentOrder
+              .filter((moduleName) => groupedQuestions[moduleName])
+              .map((moduleName, index) => (
+                <ModuleAccordion
+                  key={moduleName}
+                  moduleName={`${index + 1}.${" "}${moduleName}`}
+                  sections={groupedQuestions[moduleName]}
+                  onToggle={handleToggle}
+                  onBookmark={handleBookmark}
+                  onNotes={handleNotes}
+                  onOpenVideo={setVideoUrl}
+                />
+              ))}
+          </div>
         </div>
-      </div>
-      <div className="mt-12">
-        <SectionHeader
-          title="DSA Roadmap"
-          subtitle={`${questions.length} questions available`}
-        />
-
-        <div className="mt-6 space-y-5">
-          {currentOrder
-            .filter((moduleName) => groupedQuestions[moduleName])
-            .map((moduleName, index) => (
-              <ModuleAccordion
-                key={moduleName}
-                moduleName={`${index + 1}.${" "}${moduleName}`}
-                sections={groupedQuestions[moduleName]}
-                onToggle={handleToggle}
-                onBookmark={handleBookmark}
-                onNotes={handleNotes}
-                onOpenVideo={setVideoUrl}
-              />
-            ))}
-        </div>
-      </div>
-      {videoUrl && (
-        <div
-          className="
+        {videoUrl && (
+          <div
+            className="
     fixed
     inset-0
     z-[100]
@@ -472,10 +501,10 @@ const DSATracker = () => {
 
     p-4
     "
-          onClick={() => setVideoUrl(null)}
-        >
-          <div
-            className="
+            onClick={() => setVideoUrl(null)}
+          >
+            <div
+              className="
       w-full
       max-w-5xl
 
@@ -486,19 +515,19 @@ const DSATracker = () => {
 
       p-4
       "
-            onClick={(e) => e.stopPropagation()}
-          >
-            <iframe
-              src={getYoutubeEmbedUrl(videoUrl)}
-              title="Solution Video"
-              className="w-full aspect-video rounded-xl"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
-            <button
-              onClick={() => setVideoUrl(null)}
-              className="
+              onClick={(e) => e.stopPropagation()}
+            >
+              <iframe
+                src={getYoutubeEmbedUrl(videoUrl)}
+                title="Solution Video"
+                className="w-full aspect-video rounded-xl"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+              <button
+                onClick={() => setVideoUrl(null)}
+                className="
         mt-4
 
         px-4
@@ -511,51 +540,51 @@ const DSATracker = () => {
 
         rounded-xl
         "
-            >
-              Close
-            </button>
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+        <NotesModal
+          isOpen={showNotesModal}
+          question={selectedQuestion}
+          onClose={() => {
+            setShowNotesModal(false);
+            setSelectedQuestion(null);
+          }}
+          onSave={handleSaveNotes}
+        />
+        {/* AI Coach */}
+        <div className="mt-12">
+          <SectionHeader
+            title="AI Learning Center"
+            subtitle="Personalized guidance for improvement"
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+            {coach && <AICoachCard coach={coach} />}
+
+            {skillAnalysis && <SkillAnalysisCard analysis={skillAnalysis} />}
           </div>
         </div>
-      )}
-      <NotesModal
-        isOpen={showNotesModal}
-        question={selectedQuestion}
-        onClose={() => {
-          setShowNotesModal(false);
-          setSelectedQuestion(null);
-        }}
-        onSave={handleSaveNotes}
-      />
-      {/* AI Coach */}
-      <div className="mt-12">
-        <SectionHeader
-          title="AI Learning Center"
-          subtitle="Personalized guidance for improvement"
-        />
+        {/* Topic Analysis */}
+        <div className="mt-12">
+          <SectionHeader
+            title="Analytics"
+            subtitle="Understand your strengths and weaknesses"
+          />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-          {coach && <AICoachCard coach={coach} />}
+          {progress && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 items-stretch">
+              {/* Difficulty */}
 
-          {skillAnalysis && <SkillAnalysisCard analysis={skillAnalysis} />}
-        </div>
-      </div>
-      {/* Topic Analysis */}
-      <div className="mt-12">
-        <SectionHeader
-          title="Analytics"
-          subtitle="Understand your strengths and weaknesses"
-        />
+              <DifficultyAnalytics difficultyStats={progress.difficultyStats} />
 
-        {progress && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 items-stretch">
-            {/* Difficulty */}
+              {/* Performance */}
 
-            <DifficultyAnalytics difficultyStats={progress.difficultyStats} />
-
-            {/* Performance */}
-
-            <div
-              className="
+              <div
+                className="
   bg-white
   dark:bg-slate-900
   border
@@ -568,36 +597,37 @@ const DSATracker = () => {
   flex
   flex-col
   "
-            >
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
-                Performance Insights
-              </h3>
+              >
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+                  Performance Insights
+                </h3>
 
-              <p className="text-slate-500 dark:text-slate-400 mt-2">
-                Key takeaways from your preparation
-              </p>
+                <p className="text-slate-500 dark:text-slate-400 mt-2">
+                  Key takeaways from your preparation
+                </p>
 
-              <div className="flex-1 flex flex-col justify-between mt-8 gap-5">
-                <InsightCard
-                  title="Strongest Topic"
-                  value={progress.strongestTopic || "-"}
-                />
+                <div className="flex-1 flex flex-col justify-between mt-8 gap-5">
+                  <InsightCard
+                    title="Strongest Topic"
+                    value={progress.strongestTopic || "-"}
+                  />
 
-                <InsightCard
-                  title="Weakest Topic"
-                  value={progress.weakestTopic || "-"}
-                />
+                  <InsightCard
+                    title="Weakest Topic"
+                    value={progress.weakestTopic || "-"}
+                  />
 
-                <InsightCard
-                  title="Readiness"
-                  value={progress.readiness || "-"}
-                />
+                  <InsightCard
+                    title="Readiness"
+                    value={progress.readiness || "-"}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-    </DashboardLayout>
+          )}
+        </div>
+      </DashboardLayout>
+    </>
   );
 };
 

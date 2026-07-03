@@ -4,12 +4,10 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Skeleton from "../components/skeletons/Skeleton";
 import SheetCard from "../components/dsa/SheetCard";
 
-import {
-  getProfile,
-  updateActiveSheets,
-} from "../services/userService";
+import { getProfile, updateActiveSheets } from "../services/userService";
 
 import { getSheets } from "../services/dsaService";
+import SEO from "../components/common/SEO";
 
 const SheetManagement = () => {
   const [selectedSheets, setSelectedSheets] = useState([]);
@@ -42,9 +40,7 @@ const SheetManagement = () => {
   }, []);
 
   const toggleRoadmap = (sheetName) => {
-    setExpandedSheet(
-      expandedSheet === sheetName ? null : sheetName,
-    );
+    setExpandedSheet(expandedSheet === sheetName ? null : sheetName);
   };
 
   const handleSheetToggle = async (sheetName) => {
@@ -52,9 +48,7 @@ const SheetManagement = () => {
       let updatedSheets;
 
       if (selectedSheets.includes(sheetName)) {
-        updatedSheets = selectedSheets.filter(
-          (sheet) => sheet !== sheetName,
-        );
+        updatedSheets = selectedSheets.filter((sheet) => sheet !== sheetName);
       } else {
         updatedSheets = [...selectedSheets, sheetName];
       }
@@ -69,68 +63,89 @@ const SheetManagement = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
-        <div className="space-y-8">
-          <div className="space-y-3">
-            <Skeleton className="h-4 w-32" />
-            <Skeleton className="h-8 w-64" />
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-5/6" />
-          </div>
-          <div className="grid gap-6 xl:grid-cols-2">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <div key={index} className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
-                <Skeleton className="h-6 w-40" />
-                <Skeleton className="mt-4 h-4 w-3/4" />
-                <Skeleton className="mt-2 h-4 w-full" />
-                <Skeleton className="mt-2 h-4 w-5/6" />
-                <div className="mt-6 flex gap-3">
-                  <Skeleton className="h-10 w-24" />
-                  <Skeleton className="h-10 w-24" />
+      <>
+        <SEO
+          title="DSA Sheets"
+          description="Manage Striver A2Z, Blind 75, Love Babbar, NeetCode 150 and other coding sheets."
+          canonical="/sheet-management"
+          noIndex={true}
+        />
+
+        <DashboardLayout>
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-8 w-64" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+            </div>
+            <div className="grid gap-6 xl:grid-cols-2">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm"
+                >
+                  <Skeleton className="h-6 w-40" />
+                  <Skeleton className="mt-4 h-4 w-3/4" />
+                  <Skeleton className="mt-2 h-4 w-full" />
+                  <Skeleton className="mt-2 h-4 w-5/6" />
+                  <div className="mt-6 flex gap-3">
+                    <Skeleton className="h-10 w-24" />
+                    <Skeleton className="h-10 w-24" />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </DashboardLayout>
+        </DashboardLayout>
+      </>
     );
   }
 
   return (
-    <DashboardLayout>
-      {/* Header */}
+    <>
+      <SEO
+        title="DSA Sheets"
+        description="Manage Striver A2Z, Blind 75, Love Babbar, NeetCode 150 and other coding sheets."
+        canonical="/sheet-management"
+        noIndex={true}
+      />
 
-      <div className="mb-10">
-        <p className="text-sm text-slate-500 dark:text-slate-400">
-          Learning Management
-        </p>
+      <DashboardLayout>
+        {/* Header */}
 
-        <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
-          DSA Sheets
-        </h1>
+        <div className="mb-10">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Learning Management
+          </p>
 
-        <p className="mt-2 text-slate-500 dark:text-slate-400">
-          Choose the learning roadmaps you want to follow.
-          You can activate multiple sheets and switch between
-          them anytime from the DSA Tracker.
-        </p>
-      </div>
+          <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
+            DSA Sheets
+          </h1>
 
-      {/* Cards */}
+          <p className="mt-2 text-slate-500 dark:text-slate-400">
+            Choose the learning roadmaps you want to follow. You can activate
+            multiple sheets and switch between them anytime from the DSA
+            Tracker.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        {sheets.map((sheet) => (
-          <SheetCard
-            key={sheet.name}
-            sheet={sheet}
-            active={selectedSheets.includes(sheet.name)}
-            expanded={expandedSheet === sheet.name}
-            onToggleRoadmap={toggleRoadmap}
-            onToggleSheet={handleSheetToggle}
-          />
-        ))}
-      </div>
-    </DashboardLayout>
+        {/* Cards */}
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          {sheets.map((sheet) => (
+            <SheetCard
+              key={sheet.name}
+              sheet={sheet}
+              active={selectedSheets.includes(sheet.name)}
+              expanded={expandedSheet === sheet.name}
+              onToggleRoadmap={toggleRoadmap}
+              onToggleSheet={handleSheetToggle}
+            />
+          ))}
+        </div>
+      </DashboardLayout>
+    </>
   );
 };
 

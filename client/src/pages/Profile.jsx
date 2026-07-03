@@ -21,6 +21,7 @@ import {
   uploadProfileImage,
 } from "../services/profileService";
 import SectionHeader from "../components/ui/SectionHeader";
+import SEO from "../components/common/SEO";
 
 const inputClass = `
 w-full
@@ -245,19 +246,35 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
-        <ProfilePageSkeleton />
-      </DashboardLayout>
+      <>
+        <SEO
+          title="Profile"
+          description="Manage your developer profile and connect your coding platforms."
+          canonical="/profile"
+          noIndex={true}
+        />
+        <DashboardLayout>
+          <ProfilePageSkeleton />
+        </DashboardLayout>
+      </>
     );
   }
 
   return (
-    <DashboardLayout>
-      <div className="max-w-7xl">
-        {/* Header */}
+    <>
+      <SEO
+        title="Profile"
+        description="Manage your developer profile and connect your coding platforms."
+        canonical="/profile"
+        noIndex={true}
+      />
 
-        <div
-          className="
+      <DashboardLayout>
+        <div className="max-w-7xl">
+          {/* Header */}
+
+          <div
+            className="
   mb-10
 
   flex
@@ -269,26 +286,26 @@ const Profile = () => {
 
   gap-4
   "
-        >
-          <div>
-            <p className="text-slate-500 dark:text-slate-400 text-sm">
-              Account Management
-            </p>
+          >
+            <div>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">
+                Account Management
+              </p>
 
-            <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
-              Profile
-            </h1>
+              <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
+                Profile
+              </h1>
 
-            <p className="text-slate-500 dark:text-slate-400 mt-2">
-              Manage your profile and coding platforms
-            </p>
-          </div>
+              <p className="text-slate-500 dark:text-slate-400 mt-2">
+                Manage your profile and coding platforms
+              </p>
+            </div>
 
-          {formData.username && (
-            <button
-              type="button"
-              onClick={handleShareProfile}
-              className={`
+            {formData.username && (
+              <button
+                type="button"
+                onClick={handleShareProfile}
+                className={`
     inline-flex
     items-center
     gap-2
@@ -318,30 +335,30 @@ const Profile = () => {
         `
     }
   `}
-            >
-              {copied ? (
-                <>
-                  <Check size={18} />
-                  Copied
-                </>
-              ) : (
-                <>
-                  <Share2 size={18} />
-                  Share Profile
-                </>
-              )}
-            </button>
-          )}
-        </div>
+              >
+                {copied ? (
+                  <>
+                    <Check size={18} />
+                    Copied
+                  </>
+                ) : (
+                  <>
+                    <Share2 size={18} />
+                    Share Profile
+                  </>
+                )}
+              </button>
+            )}
+          </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Personal Information */}
+          <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Personal Information */}
 
-          <div className="grid lg:grid-cols-[320px_1fr] gap-8">
-            {/* Left Profile Card */}
+            <div className="grid lg:grid-cols-[320px_1fr] gap-8">
+              {/* Left Profile Card */}
 
-            <div
-              className="
+              <div
+                className="
       bg-white
       dark:bg-slate-900
 
@@ -357,13 +374,13 @@ const Profile = () => {
 
       h-fit
       "
-            >
-              <div className="flex flex-col items-center text-center">
-                {formData.profileImage ? (
-                  <img
-                    src={formData.profileImage}
-                    alt="Profile"
-                    className="
+              >
+                <div className="flex flex-col items-center text-center">
+                  {formData.profileImage ? (
+                    <img
+                      src={formData.profileImage}
+                      alt="Profile"
+                      className="
             w-32
             h-32
 
@@ -374,10 +391,10 @@ const Profile = () => {
             border-slate-200
             dark:border-slate-700
             "
-                  />
-                ) : (
-                  <div
-                    className="
+                    />
+                  ) : (
+                    <div
+                      className="
             w-32
             h-32
 
@@ -394,13 +411,13 @@ const Profile = () => {
             text-5xl
             font-bold
             "
-                  >
-                    {formData.name?.charAt(0)?.toUpperCase() || "D"}
-                  </div>
-                )}
+                    >
+                      {formData.name?.charAt(0)?.toUpperCase() || "D"}
+                    </div>
+                  )}
 
-                <label
-                  className="
+                  <label
+                    className="
           mt-5
 
           cursor-pointer
@@ -424,19 +441,19 @@ const Profile = () => {
 
           transition
           "
-                >
-                  {uploading ? "Uploading..." : "Change Photo"}
+                  >
+                    {uploading ? "Uploading..." : "Change Photo"}
 
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageUpload}
-                  />
-                </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                  </label>
 
-                <h3
-                  className="
+                  <h3
+                    className="
           mt-6
 
           text-xl
@@ -445,39 +462,39 @@ const Profile = () => {
           text-slate-900
           dark:text-white
           "
-                >
-                  {formData.name || "Developer"}
-                </h3>
+                  >
+                    {formData.name || "Developer"}
+                  </h3>
 
-                {formData.username && (
-                  <div className="mt-2">
-                    <p
-                      className="
+                  {formData.username && (
+                    <div className="mt-2">
+                      <p
+                        className="
       text-slate-500
       dark:text-slate-400
       "
-                    >
-                      @{formData.username}
-                    </p>
+                      >
+                        @{formData.username}
+                      </p>
 
-                    <p
-                      className="
+                      <p
+                        className="
       text-xs
       text-slate-400
       mt-1
       "
-                    >
-                      codorbit.ai/u/{formData.username}
-                    </p>
-                  </div>
-                )}
+                      >
+                        codorbit.ai/u/{formData.username}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* Personal Information */}
+              {/* Personal Information */}
 
-            <div
-              className="
+              <div
+                className="
       bg-white
       dark:bg-slate-900
 
@@ -491,11 +508,172 @@ const Profile = () => {
 
       shadow-sm
       "
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <SectionHeader
+                    title="Personal Information"
+                    subtitle="Basic profile details"
+                  />
+
+                  <button
+                    type="submit"
+                    className="
+      shrink-0
+
+      inline-flex
+      items-center
+      gap-2
+
+      bg-blue-600
+      hover:bg-blue-700
+
+      text-white
+
+      px-6
+      py-2.5
+
+      rounded-xl
+
+      font-medium
+
+      transition-all
+      shadow-sm
+    "
+                  >
+                    Save Changes
+                  </button>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-5 mt-6">
+                  <div className="relative md:col-span-2">
+                    <AtSign
+                      size={18}
+                      className="
+    absolute
+    left-4
+    top-[18px]
+
+    text-blue-600
+    dark:text-blue-400
+    "
+                    />
+
+                    <input
+                      name="username"
+                      value={formData.username || ""}
+                      onChange={handleChange}
+                      placeholder="Choose a unique username"
+                      className={`${inputClass} pl-11`}
+                    />
+
+                    <div className="mt-2 flex items-center gap-2">
+                      <span
+                        className="
+      text-xs
+      font-medium
+
+      text-slate-500
+      dark:text-slate-400
+      "
+                      >
+                        Public URL:
+                      </span>
+
+                      <span
+                        className="
+      text-xs
+
+      text-blue-600
+      dark:text-blue-400
+
+      font-medium
+      "
+                      >
+                        /u/{formData.username || "username"}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <User
+                      size={18}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                    />
+
+                    <input
+                      name="name"
+                      value={formData.name || ""}
+                      onChange={handleChange}
+                      placeholder="Full Name"
+                      className={`${inputClass} pl-11`}
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <GraduationCap
+                      size={18}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                    />
+
+                    <input
+                      name="college"
+                      value={formData.college || ""}
+                      onChange={handleChange}
+                      placeholder="College"
+                      className={`${inputClass} pl-11`}
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <BookOpen
+                      size={18}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                    />
+
+                    <input
+                      name="branch"
+                      value={formData.branch || ""}
+                      onChange={handleChange}
+                      placeholder="Branch"
+                      className={`${inputClass} pl-11`}
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <Trophy
+                      size={18}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                    />
+
+                    <input
+                      name="graduationYear"
+                      value={formData.graduationYear || ""}
+                      onChange={handleChange}
+                      placeholder="Graduation Year"
+                      className={`${inputClass} pl-11`}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Connected Platforms */}
+
+            <div
+              className="
+            bg-white
+            dark:bg-slate-900
+            border
+            border-slate-200
+            dark:border-slate-800
+            rounded-3xl
+            p-8
+            shadow-sm
+            "
             >
               <div className="flex items-start justify-between gap-4">
                 <SectionHeader
-                  title="Personal Information"
-                  subtitle="Basic profile details"
+                  title="Connected Platforms"
+                  subtitle="Usernames used for syncing data"
                 />
 
                 <button
@@ -527,193 +705,32 @@ const Profile = () => {
                 </button>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-5 mt-6">
-                <div className="relative md:col-span-2">
-                  <AtSign
-                    size={18}
-                    className="
-    absolute
-    left-4
-    top-[18px]
+              <div className="space-y-4 mt-6">
+                <PlatformInputCard
+                  logo={githubLogo}
+                  title="GitHub"
+                  name="githubUsername"
+                  value={formData.githubUsername}
+                  placeholder="GitHub Username"
+                />
 
-    text-blue-600
-    dark:text-blue-400
-    "
-                  />
+                <PlatformInputCard
+                  logo={leetcodeLogo}
+                  title="LeetCode"
+                  name="leetcodeUsername"
+                  value={formData.leetcodeUsername}
+                  placeholder="LeetCode Username"
+                />
 
-                  <input
-                    name="username"
-                    value={formData.username || ""}
-                    onChange={handleChange}
-                    placeholder="Choose a unique username"
-                    className={`${inputClass} pl-11`}
-                  />
+                <PlatformInputCard
+                  logo={codeforcesLogo}
+                  title="Codeforces"
+                  name="codeforcesUsername"
+                  value={formData.codeforcesUsername}
+                  placeholder="Codeforces Username"
+                />
 
-                  <div className="mt-2 flex items-center gap-2">
-                    <span
-                      className="
-      text-xs
-      font-medium
-
-      text-slate-500
-      dark:text-slate-400
-      "
-                    >
-                      Public URL:
-                    </span>
-
-                    <span
-                      className="
-      text-xs
-
-      text-blue-600
-      dark:text-blue-400
-
-      font-medium
-      "
-                    >
-                      /u/{formData.username || "username"}
-                    </span>
-                  </div>
-                </div>
-                <div className="relative">
-                  <User
-                    size={18}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
-                  <input
-                    name="name"
-                    value={formData.name || ""}
-                    onChange={handleChange}
-                    placeholder="Full Name"
-                    className={`${inputClass} pl-11`}
-                  />
-                </div>
-
-                <div className="relative">
-                  <GraduationCap
-                    size={18}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
-                  <input
-                    name="college"
-                    value={formData.college || ""}
-                    onChange={handleChange}
-                    placeholder="College"
-                    className={`${inputClass} pl-11`}
-                  />
-                </div>
-
-                <div className="relative">
-                  <BookOpen
-                    size={18}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
-                  <input
-                    name="branch"
-                    value={formData.branch || ""}
-                    onChange={handleChange}
-                    placeholder="Branch"
-                    className={`${inputClass} pl-11`}
-                  />
-                </div>
-
-                <div className="relative">
-                  <Trophy
-                    size={18}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
-                  <input
-                    name="graduationYear"
-                    value={formData.graduationYear || ""}
-                    onChange={handleChange}
-                    placeholder="Graduation Year"
-                    className={`${inputClass} pl-11`}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Connected Platforms */}
-
-          <div
-            className="
-            bg-white
-            dark:bg-slate-900
-            border
-            border-slate-200
-            dark:border-slate-800
-            rounded-3xl
-            p-8
-            shadow-sm
-            "
-          >
-            <div className="flex items-start justify-between gap-4">
-              <SectionHeader
-                title="Connected Platforms"
-                subtitle="Usernames used for syncing data"
-              />
-
-              <button
-                type="submit"
-                className="
-      shrink-0
-
-      inline-flex
-      items-center
-      gap-2
-
-      bg-blue-600
-      hover:bg-blue-700
-
-      text-white
-
-      px-6
-      py-2.5
-
-      rounded-xl
-
-      font-medium
-
-      transition-all
-      shadow-sm
-    "
-              >
-                Save Changes
-              </button>
-            </div>
-
-            <div className="space-y-4 mt-6">
-              <PlatformInputCard
-                logo={githubLogo}
-                title="GitHub"
-                name="githubUsername"
-                value={formData.githubUsername}
-                placeholder="GitHub Username"
-              />
-
-              <PlatformInputCard
-                logo={leetcodeLogo}
-                title="LeetCode"
-                name="leetcodeUsername"
-                value={formData.leetcodeUsername}
-                placeholder="LeetCode Username"
-              />
-
-              <PlatformInputCard
-                logo={codeforcesLogo}
-                title="Codeforces"
-                name="codeforcesUsername"
-                value={formData.codeforcesUsername}
-                placeholder="Codeforces Username"
-              />
-
-              {/* <PlatformInputCard
+                {/* <PlatformInputCard
                 logo={gfgLogo}
                 title="GeeksforGeeks"
                 name="gfgUsername"
@@ -729,21 +746,21 @@ const Profile = () => {
                 placeholder="HackerRank Username"
               /> */}
 
-              <PlatformInputCard
-                logo={codechefLogo}
-                title="CodeChef"
-                name="codechefUsername"
-                value={formData.codechefUsername}
-                placeholder="CodeChef Username"
-              />
+                <PlatformInputCard
+                  logo={codechefLogo}
+                  title="CodeChef"
+                  name="codechefUsername"
+                  value={formData.codechefUsername}
+                  placeholder="CodeChef Username"
+                />
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
 
-        {/* Learning Activity */}
+          {/* Learning Activity */}
 
-        <div
-          className="
+          <div
+            className="
   mt-8
 
   bg-white
@@ -759,14 +776,14 @@ const Profile = () => {
 
   shadow-sm
   "
-        >
-          <SectionHeader
-            title="Learning Activity"
-            subtitle="Access your saved learning resources"
-          />
+          >
+            <SectionHeader
+              title="Learning Activity"
+              subtitle="Access your saved learning resources"
+            />
 
-          <div
-            className="
+            <div
+              className="
     mt-6
 
     flex
@@ -784,10 +801,10 @@ const Profile = () => {
 
     p-6
     "
-          >
-            <div className="flex items-center gap-4">
-              <div
-                className="
+            >
+              <div className="flex items-center gap-4">
+                <div
+                  className="
         w-14
         h-14
 
@@ -800,24 +817,24 @@ const Profile = () => {
         items-center
         justify-center
         "
-              >
-                <Bookmark size={26} className="text-yellow-600" />
+                >
+                  <Bookmark size={26} className="text-yellow-600" />
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                    Bookmarked Questions
+                  </h3>
+
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    View all DSA questions you've saved for future revision.
+                  </p>
+                </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                  Bookmarked Questions
-                </h3>
-
-                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                  View all DSA questions you've saved for future revision.
-                </p>
-              </div>
-            </div>
-
-            <Link
-              to="/saved-questions"
-              className="
+              <Link
+                to="/saved-questions"
+                className="
       inline-flex
       items-center
       gap-2
@@ -835,14 +852,15 @@ const Profile = () => {
 
       transition-all
       "
-            >
-              View
-              <ArrowRight size={18} />
-            </Link>
+              >
+                View
+                <ArrowRight size={18} />
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </DashboardLayout>
+      </DashboardLayout>
+    </>
   );
 };
 

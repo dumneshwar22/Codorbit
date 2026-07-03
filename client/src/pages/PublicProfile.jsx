@@ -21,6 +21,7 @@ import { useTheme } from "../context/ThemeContext.jsx";
 
 import logoLight from "../assets/logo-light.png";
 import logoDark from "../assets/logo-dark.png";
+import SEO from "../components/common/SEO.jsx";
 
 const PublicProfile = () => {
   const { username } = useParams();
@@ -68,23 +69,40 @@ const PublicProfile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 md:p-10">
-        <div className="mx-auto max-w-6xl space-y-8">
-          <ProfileCardSkeleton />
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <StatCardSkeleton key={index} />
-            ))}
+      <>
+        <SEO
+          title="Developer Profile"
+          description="View a public CodOrbit developer profile with coding achievements, GitHub statistics and developer insights."
+          canonical="/u/:username"
+          noIndex={false}
+        />
+
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 md:p-10">
+          <div className="mx-auto max-w-6xl space-y-8">
+            <ProfileCardSkeleton />
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <StatCardSkeleton key={index} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   if (!user) {
     return (
-      <div
-        className="
+      <>
+        <SEO
+          title="Developer Profile"
+          description="View a public CodOrbit developer profile with coding achievements, GitHub statistics and developer insights."
+          canonical="/u/:username"
+          noIndex={false}
+        />
+
+        <div
+          className="
         min-h-screen
 
         bg-slate-50
@@ -94,32 +112,33 @@ const PublicProfile = () => {
         items-center
         justify-center
         "
-      >
-        <div className="text-center">
-          <h1
-            className="
+        >
+          <div className="text-center">
+            <h1
+              className="
             text-4xl
             font-bold
 
             text-slate-900
             dark:text-white
             "
-          >
-            User Not Found
-          </h1>
+            >
+              User Not Found
+            </h1>
 
-          <p
-            className="
+            <p
+              className="
             mt-3
 
             text-slate-500
             dark:text-slate-400
             "
-          >
-            This profile does not exist.
-          </p>
+            >
+              This profile does not exist.
+            </p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -167,18 +186,25 @@ const PublicProfile = () => {
   ].filter((platform) => platform.username);
 
   return (
-    <div
-      className="
+    <>
+      <SEO
+        title="Developer Profile"
+        description="View a public CodOrbit developer profile with coding achievements, GitHub statistics and developer insights."
+        canonical="/u/:username"
+        noIndex={false}
+      />
+      <div
+        className="
       min-h-screen
 
       bg-slate-50
       dark:bg-slate-950
       "
-    >
-      {/* Navbar */}
+      >
+        {/* Navbar */}
 
-      <header
-        className="
+        <header
+          className="
         sticky
         top-0
         z-50
@@ -192,9 +218,9 @@ const PublicProfile = () => {
         border-slate-200
         dark:border-slate-800
         "
-      >
-        <div
-          className="
+        >
+          <div
+            className="
   max-w-7xl
   mx-auto
 
@@ -206,10 +232,10 @@ const PublicProfile = () => {
   items-center
   justify-center
   "
-        >
-          <Link
-            to="/"
-            className="
+          >
+            <Link
+              to="/"
+              className="
   flex
   items-center
   gap-3
@@ -218,19 +244,19 @@ const PublicProfile = () => {
 
   transition-all
   "
-          >
-            <img
-              src={theme === "dark" ? logoDark : logoLight}
-              alt="CodOrbit"
-              className="
+            >
+              <img
+                src={theme === "dark" ? logoDark : logoLight}
+                alt="CodOrbit"
+                className="
     w-11
     h-11
     object-contain
     "
-            />
+              />
 
-            <h1
-              className="
+              <h1
+                className="
     text-3xl
     md:text-4xl
 
@@ -239,26 +265,26 @@ const PublicProfile = () => {
     text-slate-900
     dark:text-white
     "
-            >
-              CodOrbit
-            </h1>
-          </Link>
-        </div>
-      </header>
+              >
+                CodOrbit
+              </h1>
+            </Link>
+          </div>
+        </header>
 
-      <div
-        className="
+        <div
+          className="
         max-w-6xl
         mx-auto
 
         px-6
         py-12
         "
-      >
-        {/* Hero */}
+        >
+          {/* Hero */}
 
-        <div
-          className="
+          <div
+            className="
           bg-white
           dark:bg-slate-900
 
@@ -272,31 +298,31 @@ const PublicProfile = () => {
 
           shadow-sm
           "
-        >
-          <div
-            className="
+          >
+            <div
+              className="
             flex
             flex-col
 
             items-center
             text-center
             "
-          >
-            {user.profileImage ? (
-              <img
-                src={user.profileImage}
-                alt={user.name}
-                className="
+            >
+              {user.profileImage ? (
+                <img
+                  src={user.profileImage}
+                  alt={user.name}
+                  className="
                 w-28
                 h-28
 
                 rounded-full
                 object-cover
                 "
-              />
-            ) : (
-              <div
-                className="
+                />
+              ) : (
+                <div
+                  className="
                 w-28
                 h-28
 
@@ -313,13 +339,13 @@ const PublicProfile = () => {
                 text-4xl
                 font-bold
                 "
-              >
-                {user.name?.charAt(0)?.toUpperCase()}
-              </div>
-            )}
+                >
+                  {user.name?.charAt(0)?.toUpperCase()}
+                </div>
+              )}
 
-            <h1
-              className="
+              <h1
+                className="
               mt-6
 
               text-4xl
@@ -328,12 +354,12 @@ const PublicProfile = () => {
               text-slate-900
               dark:text-white
               "
-            >
-              {user.name}
-            </h1>
+              >
+                {user.name}
+              </h1>
 
-            <p
-              className="
+              <p
+                className="
               mt-2
 
               text-lg
@@ -341,30 +367,30 @@ const PublicProfile = () => {
               text-slate-500
               dark:text-slate-400
               "
-            >
-              @{user.username}
-            </p>
+              >
+                @{user.username}
+              </p>
 
-            {(user.branch || user.college) && (
-              <p
-                className="
+              {(user.branch || user.college) && (
+                <p
+                  className="
                 mt-4
 
                 text-slate-600
                 dark:text-slate-300
                 "
-              >
-                {user.branch}
+                >
+                  {user.branch}
 
-                {user.branch && user.college && " • "}
+                  {user.branch && user.college && " • "}
 
-                {user.college}
-              </p>
-            )}
+                  {user.college}
+                </p>
+              )}
 
-            <button
-              onClick={copyProfileLink}
-              className="
+              <button
+                onClick={copyProfileLink}
+                className="
               mt-6
 
               inline-flex
@@ -383,31 +409,31 @@ const PublicProfile = () => {
 
               transition-all
               "
-            >
-              {copied ? <Check size={18} /> : <Copy size={18} />}
+              >
+                {copied ? <Check size={18} /> : <Copy size={18} />}
 
-              {copied ? "Copied" : "Copy Profile Link"}
-            </button>
+                {copied ? "Copied" : "Copy Profile Link"}
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Statistics */}
+          {/* Statistics */}
 
-        <div className="mt-10">
-          <h2
-            className="
+          <div className="mt-10">
+            <h2
+              className="
             text-2xl
             font-bold
 
             text-slate-900
             dark:text-white
             "
-          >
-            CodOrbit Statistics
-          </h2>
+            >
+              CodOrbit Statistics
+            </h2>
 
-          <div
-            className="
+            <div
+              className="
             mt-5
 
             grid
@@ -415,45 +441,48 @@ const PublicProfile = () => {
 
             gap-5
             "
-          >
-            <ProfileStatCard
-              title="Solved Questions"
-              value={stats.solvedQuestions}
-            />
+            >
+              <ProfileStatCard
+                title="Solved Questions"
+                value={stats.solvedQuestions}
+              />
 
-            <ProfileStatCard title="Active Sheets" value={stats.activeSheets} />
+              <ProfileStatCard
+                title="Active Sheets"
+                value={stats.activeSheets}
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Platforms */}
+          {/* Platforms */}
 
-        {platforms.length > 0 && (
-          <div className="mt-12">
-            <h2
-              className="
+          {platforms.length > 0 && (
+            <div className="mt-12">
+              <h2
+                className="
               text-2xl
               font-bold
 
               text-slate-900
               dark:text-white
               "
-            >
-              Developer Platforms
-            </h2>
+              >
+                Developer Platforms
+              </h2>
 
-            <p
-              className="
+              <p
+                className="
   mt-2
   text-sm
   text-slate-500
   dark:text-slate-400
   "
-            >
-              Connected profiles are self-reported by users.
-            </p>
+              >
+                Connected profiles are self-reported by users.
+              </p>
 
-            <div
-              className="
+              <div
+                className="
               mt-5
 
               grid
@@ -461,15 +490,16 @@ const PublicProfile = () => {
 
               gap-4
               "
-            >
-              {platforms.map((platform) => (
-                <PlatformCard key={platform.name} {...platform} />
-              ))}
+              >
+                {platforms.map((platform) => (
+                  <PlatformCard key={platform.name} {...platform} />
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

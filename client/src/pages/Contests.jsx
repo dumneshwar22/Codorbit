@@ -21,6 +21,7 @@ import ContestCalendar from "../components/ContestCalendar";
 
 import SectionHeader from "../components/ui/SectionHeader";
 import { Trophy } from "lucide-react";
+import SEO from "../components/common/SEO";
 
 const Contests = () => {
   const [upcoming, setUpcoming] = useState([]);
@@ -77,9 +78,17 @@ const Contests = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
-        <ContestPageSkeleton />
-      </DashboardLayout>
+      <>
+        <SEO
+          title="Contest Tracker"
+          description="Track upcoming coding contests, monitor ratings and improve your competitive programming journey."
+          canonical="/contests"
+          noIndex={true}
+        />
+        <DashboardLayout>
+          <ContestPageSkeleton />
+        </DashboardLayout>
+      </>
     );
   }
 
@@ -87,26 +96,34 @@ const Contests = () => {
     analytics?.totalContests > 0 || history.length > 0 || performance;
 
   return (
-    <DashboardLayout>
-      {/* Header */}
+    <>
+      <SEO
+        title="Contest Tracker"
+        description="Track upcoming coding contests, monitor ratings and improve your competitive programming journey."
+        canonical="/contests"
+        noIndex={true}
+      />
 
-      <div className="mb-10">
-        <p className="text-slate-500 dark:text-slate-400 text-sm">
-          Competitive Programming
-        </p>
+      <DashboardLayout>
+        {/* Header */}
 
-        <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
-          Contest Center
-        </h1>
+        <div className="mb-10">
+          <p className="text-slate-500 dark:text-slate-400 text-sm">
+            Competitive Programming
+          </p>
 
-        <p className="text-slate-500 dark:text-slate-400 mt-2">
-          Track contests, ratings and performance
-        </p>
-      </div>
+          <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
+            Contest Center
+          </h1>
 
-      {!hasContestPlatform ? (
-        <div
-          className="
+          <p className="text-slate-500 dark:text-slate-400 mt-2">
+            Track contests, ratings and performance
+          </p>
+        </div>
+
+        {!hasContestPlatform ? (
+          <div
+            className="
     mt-10
 
     bg-white
@@ -124,9 +141,9 @@ const Contests = () => {
 
     shadow-sm
     "
-        >
-          <div
-            className="
+          >
+            <div
+              className="
       mx-auto
 
       w-20
@@ -141,17 +158,17 @@ const Contests = () => {
       items-center
       justify-center
       "
-          >
-            <Trophy
-              size={40}
-              className="
+            >
+              <Trophy
+                size={40}
+                className="
         text-orange-500
         "
-            />
-          </div>
+              />
+            </div>
 
-          <h2
-            className="
+            <h2
+              className="
       mt-6
 
       text-2xl
@@ -160,12 +177,12 @@ const Contests = () => {
       text-slate-900
       dark:text-white
       "
-          >
-            Connect Contest Platforms
-          </h2>
+            >
+              Connect Contest Platforms
+            </h2>
 
-          <p
-            className="
+            <p
+              className="
       mt-3
 
       max-w-2xl
@@ -174,14 +191,14 @@ const Contests = () => {
       text-slate-500
       dark:text-slate-400
       "
-          >
-            Connect your Codeforces and CodeChef accounts to track contest
-            history, rating progression, performance analytics, rankings and
-            upcoming contests in one place.
-          </p>
+            >
+              Connect your Codeforces and CodeChef accounts to track contest
+              history, rating progression, performance analytics, rankings and
+              upcoming contests in one place.
+            </p>
 
-          <div
-            className="
+            <div
+              className="
       mt-8
 
       grid
@@ -192,9 +209,9 @@ const Contests = () => {
       max-w-xl
       mx-auto
       "
-          >
-            <div
-              className="
+            >
+              <div
+                className="
         p-5
 
         rounded-2xl
@@ -203,18 +220,18 @@ const Contests = () => {
         border-slate-200
         dark:border-slate-700
         "
-            >
-              <h3 className="font-semibold text-slate-900 dark:text-white">
-                Codeforces
-              </h3>
+              >
+                <h3 className="font-semibold text-slate-900 dark:text-white">
+                  Codeforces
+                </h3>
 
-              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-                Ratings, ranks and contest history
-              </p>
-            </div>
+                <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                  Ratings, ranks and contest history
+                </p>
+              </div>
 
-            <div
-              className="
+              <div
+                className="
         p-5
 
         rounded-2xl
@@ -223,20 +240,20 @@ const Contests = () => {
         border-slate-200
         dark:border-slate-700
         "
-            >
-              <h3 className="font-semibold text-slate-900 dark:text-white">
-                CodeChef
-              </h3>
+              >
+                <h3 className="font-semibold text-slate-900 dark:text-white">
+                  CodeChef
+                </h3>
 
-              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-                Ratings, stars and contest performance
-              </p>
+                <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                  Ratings, stars and contest performance
+                </p>
+              </div>
             </div>
-          </div>
 
-          <button
-            onClick={() => (window.location.href = "/profile")}
-            className="
+            <button
+              onClick={() => (window.location.href = "/profile")}
+              className="
       mt-8
 
       px-6
@@ -252,40 +269,40 @@ const Contests = () => {
 
       transition-all
       "
-          >
-            Connect Platforms
-          </button>
-        </div>
-      ) : (
-        <>
-          {/* Performance */}
-
-          <div className="mt-12">
-            <SectionHeader
-              title="Performance Overview"
-              subtitle="Your competitive programming profile"
-            />
-
-            {performance && (
-              <div className="mt-6">
-                <ContestPerformance performance={performance} />
-              </div>
-            )}
+            >
+              Connect Platforms
+            </button>
           </div>
+        ) : (
+          <>
+            {/* Performance */}
 
-          {/* Upcoming Contests */}
+            <div className="mt-12">
+              <SectionHeader
+                title="Performance Overview"
+                subtitle="Your competitive programming profile"
+              />
 
-          <div className="mt-12">
-            <SectionHeader
-              title="Upcoming Contests"
-              subtitle="Never miss an upcoming contest"
-            />
+              {performance && (
+                <div className="mt-6">
+                  <ContestPerformance performance={performance} />
+                </div>
+              )}
+            </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-              <ContestCalendar contests={upcoming} />
+            {/* Upcoming Contests */}
 
-              <div
-                className="
+            <div className="mt-12">
+              <SectionHeader
+                title="Upcoming Contests"
+                subtitle="Never miss an upcoming contest"
+              />
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                <ContestCalendar contests={upcoming} />
+
+                <div
+                  className="
             bg-white
             dark:bg-slate-900
             border
@@ -295,102 +312,102 @@ const Contests = () => {
             p-6
             shadow-sm
             "
-              >
-                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-                  Upcoming Contests
-                </h2>
+                >
+                  <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
+                    Upcoming Contests
+                  </h2>
 
-                {upcoming.length === 0 ? (
-                  <p className="text-slate-500 dark:text-slate-400">
-                    No upcoming contests found.
+                  {upcoming.length === 0 ? (
+                    <p className="text-slate-500 dark:text-slate-400">
+                      No upcoming contests found.
+                    </p>
+                  ) : (
+                    <div className="space-y-4">
+                      {upcoming.map((contest) => (
+                        <ContestCard key={contest.name} contest={contest} />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Analytics */}
+
+            <div className="mt-12">
+              <SectionHeader
+                title="Contest Analytics"
+                subtitle="Historical contest performance"
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+                <div className={statCardClass}>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm">
+                    Total Contests
                   </p>
-                ) : (
-                  <div className="space-y-4">
-                    {upcoming.map((contest) => (
-                      <ContestCard key={contest.name} contest={contest} />
-                    ))}
-                  </div>
-                )}
+
+                  <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">
+                    {analytics?.totalContests ?? 0}
+                  </p>
+                </div>
+
+                <div className={statCardClass}>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm">
+                    Best Rank
+                  </p>
+
+                  <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">
+                    {analytics?.bestRank ?? "N/A"}
+                  </p>
+                </div>
+
+                <div className={statCardClass}>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm">
+                    Average Rank
+                  </p>
+
+                  <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">
+                    {analytics?.averageRank ?? "N/A"}
+                  </p>
+                </div>
+
+                <div className={statCardClass}>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm">
+                    Highest Gain
+                  </p>
+
+                  <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">
+                    {analytics?.highestRatingGain ?? "N/A"}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Analytics */}
+            {/* Rating Journey */}
 
-          <div className="mt-12">
-            <SectionHeader
-              title="Contest Analytics"
-              subtitle="Historical contest performance"
-            />
+            <div className="mt-12">
+              <SectionHeader
+                title="Rating Journey"
+                subtitle="Track your rating growth over time"
+              />
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-              <div className={statCardClass}>
-                <p className="text-slate-500 dark:text-slate-400 text-sm">
-                  Total Contests
-                </p>
-
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">
-                  {analytics?.totalContests ?? 0}
-                </p>
-              </div>
-
-              <div className={statCardClass}>
-                <p className="text-slate-500 dark:text-slate-400 text-sm">
-                  Best Rank
-                </p>
-
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">
-                  {analytics?.bestRank ?? "N/A"}
-                </p>
-              </div>
-
-              <div className={statCardClass}>
-                <p className="text-slate-500 dark:text-slate-400 text-sm">
-                  Average Rank
-                </p>
-
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">
-                  {analytics?.averageRank ?? "N/A"}
-                </p>
-              </div>
-
-              <div className={statCardClass}>
-                <p className="text-slate-500 dark:text-slate-400 text-sm">
-                  Highest Gain
-                </p>
-
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">
-                  {analytics?.highestRatingGain ?? "N/A"}
-                </p>
+              <div className="mt-6">
+                <RatingGraph data={ratingHistory} />
               </div>
             </div>
-          </div>
 
-          {/* Rating Journey */}
+            {/* Contest History */}
 
-          <div className="mt-12">
-            <SectionHeader
-              title="Rating Journey"
-              subtitle="Track your rating growth over time"
-            />
-
-            <div className="mt-6">
-              <RatingGraph data={ratingHistory} />
+            <div className="mt-12">
+              <SectionHeader
+                title="Contest History"
+                subtitle="All contests you've participated in"
+              />
             </div>
-          </div>
 
-          {/* Contest History */}
-
-          <div className="mt-12">
-            <SectionHeader
-              title="Contest History"
-              subtitle="All contests you've participated in"
-            />
-          </div>
-
-          {history.length === 0 ? (
-            <div
-              className="
+            {history.length === 0 ? (
+              <div
+                className="
           mt-6
           bg-white
           dark:bg-slate-900
@@ -403,12 +420,12 @@ const Contests = () => {
           text-slate-500
           dark:text-slate-400
           "
-            >
-              No contests participated yet.
-            </div>
-          ) : (
-            <div
-              className="
+              >
+                No contests participated yet.
+              </div>
+            ) : (
+              <div
+                className="
           mt-6
           bg-white
           dark:bg-slate-900
@@ -419,33 +436,33 @@ const Contests = () => {
           shadow-sm
           overflow-hidden
           "
-            >
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-slate-50 dark:bg-slate-800">
-                    <th className="p-4 text-left text-slate-600 dark:text-slate-300">
-                      Contest
-                    </th>
+              >
+                <table className="w-full">
+                  <thead>
+                    <tr className="bg-slate-50 dark:bg-slate-800">
+                      <th className="p-4 text-left text-slate-600 dark:text-slate-300">
+                        Contest
+                      </th>
 
-                    <th className="p-4 text-left text-slate-600 dark:text-slate-300">
-                      Rank
-                    </th>
+                      <th className="p-4 text-left text-slate-600 dark:text-slate-300">
+                        Rank
+                      </th>
 
-                    <th className="p-4 text-left text-slate-600 dark:text-slate-300">
-                      Rating Change
-                    </th>
+                      <th className="p-4 text-left text-slate-600 dark:text-slate-300">
+                        Rating Change
+                      </th>
 
-                    <th className="p-4 text-left text-slate-600 dark:text-slate-300">
-                      Date
-                    </th>
-                  </tr>
-                </thead>
+                      <th className="p-4 text-left text-slate-600 dark:text-slate-300">
+                        Date
+                      </th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  {history.map((contest) => (
-                    <tr
-                      key={contest.contestName}
-                      className="
+                  <tbody>
+                    {history.map((contest) => (
+                      <tr
+                        key={contest.contestName}
+                        className="
                   border-t
                   border-slate-100
                   dark:border-slate-800
@@ -453,31 +470,32 @@ const Contests = () => {
                   dark:hover:bg-slate-800/50
                   transition-colors
                   "
-                    >
-                      <td className="p-4 text-slate-900 dark:text-white">
-                        {contest.contestName}
-                      </td>
+                      >
+                        <td className="p-4 text-slate-900 dark:text-white">
+                          {contest.contestName}
+                        </td>
 
-                      <td className="p-4 text-slate-900 dark:text-white">
-                        {contest.rank}
-                      </td>
+                        <td className="p-4 text-slate-900 dark:text-white">
+                          {contest.rank}
+                        </td>
 
-                      <td className="p-4 text-slate-900 dark:text-white">
-                        {contest.ratingChange}
-                      </td>
+                        <td className="p-4 text-slate-900 dark:text-white">
+                          {contest.ratingChange}
+                        </td>
 
-                      <td className="p-4 text-slate-500 dark:text-slate-400">
-                        {contest.date}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </>
-      )}
-    </DashboardLayout>
+                        <td className="p-4 text-slate-500 dark:text-slate-400">
+                          {contest.date}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
+        )}
+      </DashboardLayout>
+    </>
   );
 };
 

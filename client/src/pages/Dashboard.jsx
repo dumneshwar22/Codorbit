@@ -35,6 +35,7 @@ import { getAIInsights } from "../services/aiServices.js";
 import AIInsightsCard from "../components/AIInsightsCard";
 
 import SectionHeader from "../components/ui/SectionHeader";
+import SEO from "../components/common/SEO.jsx";
 
 const Dashboard = () => {
   const [overview, setOverview] = useState(null);
@@ -96,21 +97,37 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
-        <div className="space-y-8">
-          <DashboardPageSkeleton />
-        </div>
-      </DashboardLayout>
+      <>
+        <SEO
+          title="Dashboard"
+          description="Your personal developer dashboard with AI insights, developer score, GitHub activity, coding progress and placement readiness."
+          canonical="/dashboard"
+          noIndex={true}
+        />
+        <DashboardLayout>
+          <div className="space-y-8">
+            <DashboardPageSkeleton />
+          </div>
+        </DashboardLayout>
+      </>
     );
   }
 
   const hasConnectedPlatform = overview?.platformsConnected > 0;
 
   return (
-    <DashboardLayout>
-      {!hasConnectedPlatform ? (
-        <div
-          className="
+    <>
+      <SEO
+        title="Dashboard"
+        description="Your personal developer dashboard with AI insights, developer score, GitHub activity, coding progress and placement readiness."
+        canonical="/dashboard"
+        noIndex={true}
+      />
+
+      <DashboardLayout>
+        {!hasConnectedPlatform ? (
+          <div
+            className="
     mb-10
 
     bg-white
@@ -128,9 +145,9 @@ const Dashboard = () => {
 
     shadow-sm
     "
-        >
-          <div
-            className="
+          >
+            <div
+              className="
       mx-auto
 
       w-20
@@ -145,18 +162,18 @@ const Dashboard = () => {
       items-center
       justify-center
       "
-          >
-            <Link2
-              size={40}
-              className="
+            >
+              <Link2
+                size={40}
+                className="
         text-blue-600
         dark:text-blue-400
         "
-            />
-          </div>
+              />
+            </div>
 
-          <h2
-            className="
+            <h2
+              className="
       mt-6
 
       text-2xl
@@ -165,12 +182,12 @@ const Dashboard = () => {
       text-slate-900
       dark:text-white
       "
-          >
-            Connect Your Coding Platforms
-          </h2>
+            >
+              Connect Your Coding Platforms
+            </h2>
 
-          <p
-            className="
+            <p
+              className="
       mt-3
 
       max-w-2xl
@@ -179,14 +196,14 @@ const Dashboard = () => {
       text-slate-500
       dark:text-slate-400
       "
-          >
-            Connect GitHub, LeetCode, Codeforces and CodeChef to unlock
-            analytics, developer scores, coding streaks, AI insights and
-            personalized growth recommendations.
-          </p>
+            >
+              Connect GitHub, LeetCode, Codeforces and CodeChef to unlock
+              analytics, developer scores, coding streaks, AI insights and
+              personalized growth recommendations.
+            </p>
 
-          <div
-            className="
+            <div
+              className="
       mt-8
 
       grid
@@ -195,45 +212,49 @@ const Dashboard = () => {
 
       gap-4
       "
-          >
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
-              <p className="font-semibold text-slate-900 dark:text-white">
-                GitHub
-              </p>
+            >
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+                <p className="font-semibold text-slate-900 dark:text-white">
+                  GitHub
+                </p>
 
-              <p className="text-sm text-slate-500 mt-1">
-                Repositories & Activity
-              </p>
+                <p className="text-sm text-slate-500 mt-1">
+                  Repositories & Activity
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+                <p className="font-semibold text-slate-900 dark:text-white">
+                  LeetCode
+                </p>
+
+                <p className="text-sm text-slate-500 mt-1">DSA Progress</p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+                <p className="font-semibold text-slate-900 dark:text-white">
+                  Codeforces
+                </p>
+
+                <p className="text-sm text-slate-500 mt-1">
+                  Competitive Rating
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+                <p className="font-semibold text-slate-900 dark:text-white">
+                  CodeChef
+                </p>
+
+                <p className="text-sm text-slate-500 mt-1">
+                  Contest Performance
+                </p>
+              </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
-              <p className="font-semibold text-slate-900 dark:text-white">
-                LeetCode
-              </p>
-
-              <p className="text-sm text-slate-500 mt-1">DSA Progress</p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
-              <p className="font-semibold text-slate-900 dark:text-white">
-                Codeforces
-              </p>
-
-              <p className="text-sm text-slate-500 mt-1">Competitive Rating</p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
-              <p className="font-semibold text-slate-900 dark:text-white">
-                CodeChef
-              </p>
-
-              <p className="text-sm text-slate-500 mt-1">Contest Performance</p>
-            </div>
-          </div>
-
-          <button
-            onClick={() => (window.location.href = "/profile")}
-            className="
+            <button
+              onClick={() => (window.location.href = "/profile")}
+              className="
       mt-8
 
       px-6
@@ -249,35 +270,37 @@ const Dashboard = () => {
 
       transition-all
       "
-          >
-            Connect Platforms
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="flex justify-between items-center mb-10">
-            <div>
-              <p className="text-slate-500 dark:text-slate-400">Welcome back</p>
-
-              <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
-                Developer Dashboard
-              </h1>
-            </div>
-
-            <SyncButton onSuccess={fetchDashboard} />
+            >
+              Connect Platforms
+            </button>
           </div>
-          {developerScore && (
-            <div className="mb-10">
-              <DeveloperScoreCard
-                score={developerScore.overallScore}
-                level={developerScore.grade}
-                description={developerScore.description}
-              />
+        ) : (
+          <>
+            <div className="flex justify-between items-center mb-10">
+              <div>
+                <p className="text-slate-500 dark:text-slate-400">
+                  Welcome back
+                </p>
+
+                <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
+                  Developer Dashboard
+                </h1>
+              </div>
+
+              <SyncButton onSuccess={fetchDashboard} />
             </div>
-          )}
-          {error && (
-            <div
-              className="
+            {developerScore && (
+              <div className="mb-10">
+                <DeveloperScoreCard
+                  score={developerScore.overallScore}
+                  level={developerScore.grade}
+                  description={developerScore.description}
+                />
+              </div>
+            )}
+            {error && (
+              <div
+                className="
         bg-red-100
         dark:bg-red-900/20
         text-red-700
@@ -286,122 +309,123 @@ const Dashboard = () => {
         rounded-xl
         mb-4
         "
-            >
-              {error}
-            </div>
-          )}
-
-          <div className="mt-14">
-            <SectionHeader
-              title="Performance Overview"
-              subtitle="Your coding and development metrics"
-            />
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6">
-              <OverviewCard
-                title="GitHub Repos"
-                value={overview?.githubRepos}
-                icon={<GitBranch size={20} />}
-                description="Public repositories"
-              />
-
-              <OverviewCard
-                title="GitHub Stars"
-                value={overview?.githubStars}
-                icon={<Star size={20} />}
-                description="Total stars earned"
-              />
-
-              <OverviewCard
-                title="LeetCode Solved"
-                value={overview?.leetcodeSolved}
-                icon={<Code2 size={20} />}
-                description="Problems solved"
-              />
-
-              <OverviewCard
-                title="CF Rating"
-                value={overview?.codeforcesRating}
-                icon={<Trophy size={20} />}
-                description="Current rating"
-              />
-
-              <OverviewCard
-                title="CodeChef Rating"
-                value={overview?.codechefRating}
-                icon={<Trophy size={20} />}
-                description="Current Rating"
-              />
-            </div>
-          </div>
-          <div className="mt-14">
-            <SectionHeader
-              title="Consistency"
-              subtitle="Track your learning habits"
-            />
-
-            {streaks && (
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <StreakCard
-                  title="Coding Streak"
-                  current={streaks.coding.current}
-                  longest={streaks.coding.longest}
-                />
-
-                <StreakCard
-                  title="Development Streak"
-                  current={streaks.github.current}
-                  longest={streaks.github.longest}
-                />
+              >
+                {error}
               </div>
             )}
-          </div>
-          <div className="mt-14">
-            <SectionHeader
-              title="Activity"
-              subtitle="Your contributions over the last year"
-            />
 
-            {heatmap && (
-              <div className="mt-6 space-y-8">
-                <ActivityHeatmap
-                  title="Coding Activity"
-                  data={heatmap.coding}
-                  type="coding"
+            <div className="mt-14">
+              <SectionHeader
+                title="Performance Overview"
+                subtitle="Your coding and development metrics"
+              />
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6">
+                <OverviewCard
+                  title="GitHub Repos"
+                  value={overview?.githubRepos}
+                  icon={<GitBranch size={20} />}
+                  description="Public repositories"
                 />
 
-                <ActivityHeatmap
-                  title="Development Activity"
-                  data={heatmap.github}
-                  type="github"
+                <OverviewCard
+                  title="GitHub Stars"
+                  value={overview?.githubStars}
+                  icon={<Star size={20} />}
+                  description="Total stars earned"
+                />
+
+                <OverviewCard
+                  title="LeetCode Solved"
+                  value={overview?.leetcodeSolved}
+                  icon={<Code2 size={20} />}
+                  description="Problems solved"
+                />
+
+                <OverviewCard
+                  title="CF Rating"
+                  value={overview?.codeforcesRating}
+                  icon={<Trophy size={20} />}
+                  description="Current rating"
+                />
+
+                <OverviewCard
+                  title="CodeChef Rating"
+                  value={overview?.codechefRating}
+                  icon={<Trophy size={20} />}
+                  description="Current Rating"
                 />
               </div>
-            )}
-          </div>
-          <div className="mt-14">
-            <SectionHeader
-              title="Insights"
-              subtitle="Understand your growth patterns"
-            />
-
-            <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {insights && <ActivityInsights insights={insights} />}
-
-              {activityCoach && <ActivityCoachCard coach={activityCoach} />}
             </div>
-          </div>
-          <div className="mt-14">
-            <SectionHeader
-              title="AI Insights"
-              subtitle="Personalized recommendations from CodOrbit AI"
-            />
+            <div className="mt-14">
+              <SectionHeader
+                title="Consistency"
+                subtitle="Track your learning habits"
+              />
 
-            <div className="mt-6">
-              <AIInsightsCard insights={aiInsights} />
+              {streaks && (
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <StreakCard
+                    title="Coding Streak"
+                    current={streaks.coding.current}
+                    longest={streaks.coding.longest}
+                  />
+
+                  <StreakCard
+                    title="Development Streak"
+                    current={streaks.github.current}
+                    longest={streaks.github.longest}
+                  />
+                </div>
+              )}
             </div>
-          </div>
-        </>
-      )}
-    </DashboardLayout>
+            <div className="mt-14">
+              <SectionHeader
+                title="Activity"
+                subtitle="Your contributions over the last year"
+              />
+
+              {heatmap && (
+                <div className="mt-6 space-y-8">
+                  <ActivityHeatmap
+                    title="Coding Activity"
+                    data={heatmap.coding}
+                    type="coding"
+                  />
+
+                  <ActivityHeatmap
+                    title="Development Activity"
+                    data={heatmap.github}
+                    type="github"
+                  />
+                </div>
+              )}
+            </div>
+            <div className="mt-14">
+              <SectionHeader
+                title="Insights"
+                subtitle="Understand your growth patterns"
+              />
+
+              <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {insights && <ActivityInsights insights={insights} />}
+
+                {activityCoach && <ActivityCoachCard coach={activityCoach} />}
+              </div>
+            </div>
+            <div className="mt-14">
+              <SectionHeader
+                title="AI Insights"
+                subtitle="Personalized recommendations from CodOrbit AI"
+              />
+
+              <div className="mt-6">
+                <AIInsightsCard insights={aiInsights} />
+              </div>
+            </div>
+          </>
+        )}
+      </DashboardLayout>
+    </>
   );
 };
 export default Dashboard;

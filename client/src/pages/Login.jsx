@@ -2,11 +2,7 @@ import { useContext, useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import {
-  ShieldCheck,
-  Sparkles,
-  Loader2,
-} from "lucide-react";
+import { ShieldCheck, Sparkles, Loader2 } from "lucide-react";
 
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
@@ -16,6 +12,7 @@ import { googleLogin } from "../services/googleAuthService";
 
 import lightLogo from "../assets/logo-light.png";
 import darkLogo from "../assets/logo-dark.png";
+import SEO from "../components/common/SEO";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,7 +23,18 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   if (authLoading) {
-    return <LoginPageSkeleton />;
+    return (
+      <>
+        <SEO
+          title="Login"
+          description="Sign in to CodOrbit AI and continue tracking your developer journey."
+          canonical="/login"
+          noIndex={true}
+        />
+
+        <LoginPageSkeleton />
+      </>
+    );
   }
 
   const handleGoogleLogin = async (credentialResponse) => {
@@ -45,20 +53,24 @@ const Login = () => {
 
       navigate("/dashboard");
     } catch (error) {
-      toast.error(
-        error.response?.data?.message || "Google Login Failed",
-        {
-          id: toastId,
-        },
-      );
+      toast.error(error.response?.data?.message || "Google Login Failed", {
+        id: toastId,
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      className="
+    <>
+      <SEO
+        title="Login"
+        description="Sign in to CodOrbit AI and continue tracking your developer journey."
+        canonical="/login"
+        noIndex={true}
+      />
+      <div
+        className="
       min-h-screen
 
       bg-gradient-to-br
@@ -77,9 +89,9 @@ const Login = () => {
       px-4
       relative
       "
-    >
-      <div
-        className="
+      >
+        <div
+          className="
         w-full
         max-w-md
 
@@ -99,13 +111,13 @@ const Login = () => {
 
         p-10
         "
-      >
-        {/* Header */}
+        >
+          {/* Header */}
 
-        <div className="text-center">
-          <div className="flex justify-center">
-            <div
-              className="
+          <div className="text-center">
+            <div className="flex justify-center">
+              <div
+                className="
               w-24
               h-24
 
@@ -126,23 +138,23 @@ const Login = () => {
               items-center
               justify-center
               "
-            >
-              <img
-                src={lightLogo}
-                alt="CodOrbit"
-                className="w-20 h-20 dark:hidden"
-              />
+              >
+                <img
+                  src={lightLogo}
+                  alt="CodOrbit"
+                  className="w-20 h-20 dark:hidden"
+                />
 
-              <img
-                src={darkLogo}
-                alt="CodOrbit"
-                className="hidden dark:block w-20 h-20"
-              />
+                <img
+                  src={darkLogo}
+                  alt="CodOrbit"
+                  className="hidden dark:block w-20 h-20"
+                />
+              </div>
             </div>
-          </div>
 
-          <h1
-            className="
+            <h1
+              className="
             mt-6
 
             text-3xl
@@ -151,12 +163,12 @@ const Login = () => {
             text-slate-900
             dark:text-white
             "
-          >
-            Welcome to CodOrbit
-          </h1>
+            >
+              Welcome to CodOrbit
+            </h1>
 
-          <p
-            className="
+            <p
+              className="
             mt-3
 
             leading-7
@@ -164,35 +176,35 @@ const Login = () => {
             text-slate-500
             dark:text-slate-400
             "
+            >
+              Build your developer profile with one click using your Google
+              account.
+            </p>
+          </div>
+
+          {/* Google Login */}
+
+          <div
+            className={`mt-10 flex justify-center ${
+              loading ? "pointer-events-none opacity-60" : ""
+            }`}
           >
-            Build your developer profile with one click using your Google
-            account.
-          </p>
-        </div>
+            <GoogleLogin
+              onSuccess={handleGoogleLogin}
+              onError={() => toast.error("Google Login Failed")}
+              useOneTap={true}
+              theme={theme === "dark" ? "filled_black" : "outline"}
+              size="large"
+              shape="pill"
+              text="continue_with"
+              width="320"
+            />
+          </div>
 
-        {/* Google Login */}
+          {/* Why CodOrbit */}
 
-        <div
-          className={`mt-10 flex justify-center ${
-            loading ? "pointer-events-none opacity-60" : ""
-          }`}
-        >
-          <GoogleLogin
-            onSuccess={handleGoogleLogin}
-            onError={() => toast.error("Google Login Failed")}
-            useOneTap={true}
-            theme={theme === "dark" ? "filled_black" : "outline"}
-            size="large"
-            shape="pill"
-            text="continue_with"
-            width="320"
-          />
-        </div>
-
-        {/* Why CodOrbit */}
-
-        <div
-          className="
+          <div
+            className="
           mt-8
 
           rounded-2xl
@@ -206,43 +218,37 @@ const Login = () => {
 
           p-5
           "
-        >
-          <div className="flex items-center justify-center gap-3">
-            <Sparkles
-              className="text-blue-600"
-              size={20}
-            />
+          >
+            <div className="flex items-center justify-center gap-3">
+              <Sparkles className="text-blue-600" size={20} />
 
-            <h3 className="font-semibold text-slate-900 dark:text-white">
-              Why CodOrbit?
-            </h3>
+              <h3 className="font-semibold text-slate-900 dark:text-white">
+                Why CodOrbit?
+              </h3>
+            </div>
+
+            <ul className="mt-4 space-y-3">
+              <li className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                ✓ Track coding progress across platforms
+              </li>
+
+              <li className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                ✓ AI-powered resume & career analysis
+              </li>
+
+              <li className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                ✓ Placement-focused DSA roadmap
+              </li>
+
+              <li className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                <ShieldCheck size={16} className="text-green-500" />
+                Secure Google Authentication
+              </li>
+            </ul>
           </div>
 
-          <ul className="mt-4 space-y-3">
-            <li className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-              ✓ Track coding progress across platforms
-            </li>
-
-            <li className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-              ✓ AI-powered resume & career analysis
-            </li>
-
-            <li className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-              ✓ Placement-focused DSA roadmap
-            </li>
-
-            <li className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-              <ShieldCheck
-                size={16}
-                className="text-green-500"
-              />
-              Secure Google Authentication
-            </li>
-          </ul>
-        </div>
-
-        <p
-          className="
+          <p
+            className="
           mt-8
 
           text-center
@@ -254,16 +260,16 @@ const Login = () => {
           text-slate-500
           dark:text-slate-400
           "
-        >
-          By continuing, you agree to our Terms of Service and Privacy Policy.
-        </p>
-      </div>
+          >
+            By continuing, you agree to our Terms of Service and Privacy Policy.
+          </p>
+        </div>
 
-      {/* Loading Overlay */}
+        {/* Loading Overlay */}
 
-      {loading && (
-        <div
-          className="
+        {loading && (
+          <div
+            className="
           fixed
           inset-0
           z-50
@@ -278,9 +284,9 @@ const Login = () => {
           items-center
           justify-center
           "
-        >
-          <div
-            className="
+          >
+            <div
+              className="
             bg-white
             dark:bg-slate-900
 
@@ -299,23 +305,21 @@ const Login = () => {
             flex-col
             items-center
             "
-          >
-            <Loader2
-              size={42}
-              className="animate-spin text-blue-600"
-            />
+            >
+              <Loader2 size={42} className="animate-spin text-blue-600" />
 
-            <h3 className="mt-5 text-lg font-semibold text-slate-900 dark:text-white">
-              Signing you in...
-            </h3>
+              <h3 className="mt-5 text-lg font-semibold text-slate-900 dark:text-white">
+                Signing you in...
+              </h3>
 
-            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 text-center">
-              Setting up your developer workspace.
-            </p>
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 text-center">
+                Setting up your developer workspace.
+              </p>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

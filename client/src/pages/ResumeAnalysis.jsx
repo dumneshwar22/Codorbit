@@ -13,6 +13,7 @@ import ResumeJDMatch from "../components/resume/ResumeJDMatch";
 import ResumePlacementReadiness from "../components/resume/ResumePlacementReadiness";
 import ResumeUploadSection from "../components/resume/ResumeUploadSection";
 import toast from "react-hot-toast";
+import SEO from "../components/common/SEO";
 
 const ResumeAnalysis = () => {
   const [resumeFile, setResumeFile] = useState(null);
@@ -74,76 +75,92 @@ const ResumeAnalysis = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
-        <div className="space-y-6">
-          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
-            <Skeleton className="h-4 w-28" />
-            <Skeleton className="mt-4 h-10 w-3/4" />
-            <Skeleton className="mt-3 h-4 w-full" />
-            <Skeleton className="mt-2 h-4 w-5/6" />
-            <div className="mt-6 grid gap-4 lg:grid-cols-2">
-              <Skeleton className="h-32 w-full" />
-              <Skeleton className="h-32 w-full" />
-            </div>
-          </div>
-          <div className="grid gap-6 lg:grid-cols-2">
+      <>
+        <SEO
+          title="AI Resume Analysis"
+          description="Upload your resume and receive AI-powered ATS analysis, skill evaluation and placement recommendations."
+          canonical="/resume-analysis"
+          noIndex={true}
+        />
+        <DashboardLayout>
+          <div className="space-y-6">
             <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
-              <Skeleton className="h-4 w-32" />
-              <div className="mt-4 space-y-3">
-                <Skeleton className="h-3 w-full" />
-                <Skeleton className="h-3 w-5/6" />
-                <Skeleton className="h-3 w-4/6" />
+              <Skeleton className="h-4 w-28" />
+              <Skeleton className="mt-4 h-10 w-3/4" />
+              <Skeleton className="mt-3 h-4 w-full" />
+              <Skeleton className="mt-2 h-4 w-5/6" />
+              <div className="mt-6 grid gap-4 lg:grid-cols-2">
+                <Skeleton className="h-32 w-full" />
+                <Skeleton className="h-32 w-full" />
               </div>
             </div>
-            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
-              <Skeleton className="h-4 w-32" />
-              <div className="mt-4 space-y-3">
-                <Skeleton className="h-3 w-full" />
-                <Skeleton className="h-3 w-5/6" />
-                <Skeleton className="h-3 w-4/6" />
+            <div className="grid gap-6 lg:grid-cols-2">
+              <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+                <Skeleton className="h-4 w-32" />
+                <div className="mt-4 space-y-3">
+                  <Skeleton className="h-3 w-full" />
+                  <Skeleton className="h-3 w-5/6" />
+                  <Skeleton className="h-3 w-4/6" />
+                </div>
+              </div>
+              <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+                <Skeleton className="h-4 w-32" />
+                <div className="mt-4 space-y-3">
+                  <Skeleton className="h-3 w-full" />
+                  <Skeleton className="h-3 w-5/6" />
+                  <Skeleton className="h-3 w-4/6" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </DashboardLayout>
+        </DashboardLayout>
+      </>
     );
   }
 
   return (
-    <DashboardLayout>
-      {/* Header */}
+    <>
+      <SEO
+        title="AI Resume Analysis"
+        description="Upload your resume and receive AI-powered ATS analysis, skill evaluation and placement recommendations."
+        canonical="/resume-analysis"
+        noIndex={true}
+      />
 
-      <div className="mb-10">
-        <p className="text-slate-500 dark:text-slate-400 text-sm">
-        Career Tools
-        </p>
+      <DashboardLayout>
+        {/* Header */}
 
-        <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
-          AI Resume Analysis
-        </h1>
+        <div className="mb-10">
+          <p className="text-slate-500 dark:text-slate-400 text-sm">
+            Career Tools
+          </p>
 
-        <p className="text-slate-500 dark:text-slate-400 mt-2">
-          Upload your resume and get AI-powered feedbackwith Scores.
-        </p>
-      </div>
+          <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
+            AI Resume Analysis
+          </h1>
 
-      {/* Upload Section */}
+          <p className="text-slate-500 dark:text-slate-400 mt-2">
+            Upload your resume and get AI-powered feedbackwith Scores.
+          </p>
+        </div>
 
-      <div className="space-y-6">
-        <ResumeUploadSection
-          resumeFile={resumeFile}
-          jdFile={jdFile}
-          manualJD={manualJD}
-          handleResumeChange={handleResumeChange}
-          handleJDChange={handleJDChange}
-          setManualJD={setManualJD}
-          handleAnalyze={handleAnalyze}
-          loading={loading}
-        />
+        {/* Upload Section */}
 
-        {analysis && (
-          <div
-            className="
+        <div className="space-y-6">
+          <ResumeUploadSection
+            resumeFile={resumeFile}
+            jdFile={jdFile}
+            manualJD={manualJD}
+            handleResumeChange={handleResumeChange}
+            handleJDChange={handleJDChange}
+            setManualJD={setManualJD}
+            handleAnalyze={handleAnalyze}
+            loading={loading}
+          />
+
+          {analysis && (
+            <div
+              className="
     mt-12
 
     border-t
@@ -152,34 +169,37 @@ const ResumeAnalysis = () => {
 
     pt-10
     "
-          >
-            <ResumeScoreCards analysis={analysis} />
+            >
+              <ResumeScoreCards analysis={analysis} />
 
-            <div className="grid lg:grid-cols-2 gap-6 mt-8">
-              <ResumeSummary summary={analysis.summary} />
+              <div className="grid lg:grid-cols-2 gap-6 mt-8">
+                <ResumeSummary summary={analysis.summary} />
 
-              <ResumeBreakdown breakdown={analysis.breakdown} />
-            </div>
+                <ResumeBreakdown breakdown={analysis.breakdown} />
+              </div>
 
-            <div className="grid lg:grid-cols-2 gap-6 mt-8">
-              <ResumeStrengths strengths={analysis.strengths} />
+              <div className="grid lg:grid-cols-2 gap-6 mt-8">
+                <ResumeStrengths strengths={analysis.strengths} />
 
-              <ResumeWeaknesses weaknesses={analysis.weaknesses} />
-            </div>
+                <ResumeWeaknesses weaknesses={analysis.weaknesses} />
+              </div>
 
-            <div className="grid lg:grid-cols-2 gap-6 mt-8">
-              <ResumeSuggestions suggestions={analysis.suggestions} />
+              <div className="grid lg:grid-cols-2 gap-6 mt-8">
+                <ResumeSuggestions suggestions={analysis.suggestions} />
 
-              <div className="space-y-6">
-                <ResumeJDMatch jdMatch={analysis.jdMatch} />
+                <div className="space-y-6">
+                  <ResumeJDMatch jdMatch={analysis.jdMatch} />
 
-                <ResumePlacementReadiness roles={analysis.placementReadiness} />
+                  <ResumePlacementReadiness
+                    roles={analysis.placementReadiness}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-    </DashboardLayout>
+          )}
+        </div>
+      </DashboardLayout>
+    </>
   );
 };
 
