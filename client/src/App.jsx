@@ -21,7 +21,7 @@ import PublicRoute from "./components/PublicRoute";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-import { trackPageView } from "./services/analyticsService";
+import { trackPageView } from "./services/GoogleAnalyticsService";
 function App() {
   const location = useLocation();
 
