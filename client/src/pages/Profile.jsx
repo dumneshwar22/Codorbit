@@ -40,6 +40,73 @@ focus:ring-2
 focus:ring-blue-500
 `;
 
+const PlatformInputCard = ({
+  logo,
+  title,
+  name,
+  value,
+  placeholder,
+  onChange,
+}) => (
+  <div
+    className="
+    flex
+    items-center
+    gap-4
+
+    p-4
+
+    rounded-2xl
+
+    border
+    border-slate-200
+    dark:border-slate-800
+
+    bg-slate-50
+    dark:bg-slate-950
+    "
+  >
+    <div
+      className="
+      flex
+      items-center
+      gap-3
+
+      min-w-[180px]
+      "
+    >
+      <img
+        src={logo}
+        alt={title}
+        className="
+        w-8
+        h-8
+        object-contain
+        "
+      />
+
+      <span
+        className="
+        font-semibold
+
+        text-slate-900
+        dark:text-white
+        "
+      >
+        {title}
+      </span>
+    </div>
+
+    <input
+      name={name}
+      value={value || ""}
+      onChange={onChange}
+      placeholder={placeholder}
+      className={`${inputClass} flex-1`}
+    />
+  </div>
+);
+
 const Profile = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -180,69 +247,6 @@ const Profile = () => {
       console.error(error);
     }
   };
-
-  const PlatformInputCard = ({ logo, title, name, value, placeholder }) => (
-    <div
-      className="
-    flex
-    items-center
-    gap-4
-
-    p-4
-
-    rounded-2xl
-
-    border
-    border-slate-200
-    dark:border-slate-800
-
-    bg-slate-50
-    dark:bg-slate-950
-    "
-    >
-      <div
-        className="
-      flex
-      items-center
-      gap-3
-
-      min-w-[180px]
-      "
-      >
-        <img
-          src={logo}
-          alt={title}
-          className="
-        w-8
-        h-8
-        object-contain
-        "
-        />
-
-        <span
-          className="
-        font-semibold
-
-        text-slate-900
-        dark:text-white
-        "
-        >
-          {title}
-        </span>
-      </div>
-
-      <input
-        name={name}
-        value={value || ""}
-        onChange={handleChange}
-        placeholder={placeholder}
-        className={`
-        ${inputClass}
-        flex-1
-      `}
-      />
-    </div>
-  );
 
   if (loading) {
     return (
@@ -712,6 +716,7 @@ const Profile = () => {
                   name="githubUsername"
                   value={formData.githubUsername}
                   placeholder="GitHub Username"
+                  onChange={handleChange}
                 />
 
                 <PlatformInputCard
@@ -720,6 +725,7 @@ const Profile = () => {
                   name="leetcodeUsername"
                   value={formData.leetcodeUsername}
                   placeholder="LeetCode Username"
+                  onChange={handleChange}
                 />
 
                 <PlatformInputCard
@@ -728,6 +734,7 @@ const Profile = () => {
                   name="codeforcesUsername"
                   value={formData.codeforcesUsername}
                   placeholder="Codeforces Username"
+                  onChange={handleChange}
                 />
 
                 {/* <PlatformInputCard
@@ -736,6 +743,7 @@ const Profile = () => {
                 name="gfgUsername"
                 value={formData.gfgUsername}
                 placeholder="GeeksforGeeks Username"
+                 onChange={handleChange}
               />
 
               <PlatformInputCard
@@ -744,6 +752,7 @@ const Profile = () => {
                 name="hackerrankUsername"
                 value={formData.hackerrankUsername}
                 placeholder="HackerRank Username"
+                 onChange={handleChange}
               /> */}
 
                 <PlatformInputCard
@@ -752,6 +761,7 @@ const Profile = () => {
                   name="codechefUsername"
                   value={formData.codechefUsername}
                   placeholder="CodeChef Username"
+                  onChange={handleChange}
                 />
               </div>
             </div>
