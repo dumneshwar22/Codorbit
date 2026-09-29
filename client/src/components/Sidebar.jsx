@@ -25,13 +25,17 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  const { setUser } = useContext(AuthContext);
+  const { setUser, isGuest, exitGuestMode, user } = useContext(AuthContext);
 
   const logout = () => {
+    if (isGuest) {
+      exitGuestMode();
+      navigate("/login");
+      return;
+    }
+
     localStorage.removeItem("token");
-
     setUser(null);
-
     navigate("/");
   };
 
@@ -225,9 +229,18 @@ const Sidebar = () => {
         })}
       </nav>
 
-      {/* Logout */}
+      {/* User Meta */}
 
       <div className="mt-auto pt-6 border-t border-slate-200 dark:border-slate-800">
+        <div className="mb-3 rounded-2xl bg-slate-100 px-3 py-2 dark:bg-slate-800">
+          <p className="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+            {isGuest ? "Demo Account" : "Signed in"}
+          </p>
+          <p className="mt-1 text-sm font-medium text-slate-900 dark:text-white">
+            {isGuest ? "Guest User" : user?.name || "Developer"}
+          </p>
+        </div>
+
         <button
           onClick={() => setShowLogoutModal(true)}
           className="
@@ -250,7 +263,7 @@ const Sidebar = () => {
           "
         >
           <LogOut size={20} />
-          Logout
+          {isGuest ? "Exit Guest Mode" : "Logout"}
         </button>
       </div>
       <LogoutModal
@@ -258,11 +271,15 @@ const Sidebar = () => {
         onCancel={() => setShowLogoutModal(false)}
         onConfirm={() => {
           logout();
-
-          navigate("/");
-
           setShowLogoutModal(false);
         }}
+        title={isGuest ? "Exit Guest Mode?" : "Logout?"}
+        description={
+          isGuest
+            ? "Are you sure you want to leave demo mode and return to the login screen?"
+            : "Are you sure you want to logout from CodOrbit?"
+        }
+        confirmLabel={isGuest ? "Exit Guest Mode" : "Logout"}
       />
     </aside>
   );

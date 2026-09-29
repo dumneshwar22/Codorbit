@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import DashboardLayout from "../layouts/DashboardLayout";
 
@@ -22,8 +22,11 @@ import ContestCalendar from "../components/ContestCalendar";
 import SectionHeader from "../components/ui/SectionHeader";
 import { Trophy } from "lucide-react";
 import SEO from "../components/common/SEO";
+import { AuthContext } from "../context/AuthContext";
+import { guestContestData } from "../data/guestData";
 
 const Contests = () => {
+  const { isGuest } = useContext(AuthContext);
   const [upcoming, setUpcoming] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [history, setHistory] = useState([]);
@@ -44,6 +47,16 @@ const Contests = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (isGuest) {
+        setUpcoming(guestContestData.upcoming);
+        setAnalytics(guestContestData.analytics);
+        setHistory(guestContestData.history);
+        setRatingHistory(guestContestData.ratingHistory);
+        setPerformance(guestContestData.performance);
+        setLoading(false);
+        return;
+      }
+
       try {
         const upcomingData = await getUpcomingContests();
 
@@ -74,7 +87,7 @@ const Contests = () => {
     };
 
     fetchData();
-  }, []);
+  }, [isGuest]);
 
   if (loading) {
     return (

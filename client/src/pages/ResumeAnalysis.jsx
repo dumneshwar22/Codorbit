@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Skeleton from "../components/skeletons/Skeleton";
 
@@ -14,8 +14,25 @@ import ResumePlacementReadiness from "../components/resume/ResumePlacementReadin
 import ResumeUploadSection from "../components/resume/ResumeUploadSection";
 import toast from "react-hot-toast";
 import SEO from "../components/common/SEO";
+import { AuthContext } from "../context/AuthContext";
+
+const guestResumeAnalysis = {
+  summary: "Strong fundamentals in data structures, web development, and product-focused engineering. The demo profile shows good communication and problem-solving ability with room to improve storytelling and project depth.",
+  breakdown: {
+    ATS: 91,
+    Technical: 88,
+    Communication: 84,
+    Leadership: 80,
+  },
+  strengths: ["Strong DSA foundation", "Clear project outcomes", "Good collaboration examples"],
+  weaknesses: ["Need more quantifiable metrics", "Improve resume tailoring for target roles"],
+  suggestions: ["Add measurable impact to each project", "Tailor keywords to the job description"],
+  jdMatch: 86,
+  placementReadiness: ["Frontend Engineer", "Full Stack Engineer", "SDE - Product Team"],
+};
 
 const ResumeAnalysis = () => {
+  const { isGuest } = useContext(AuthContext);
   const [resumeFile, setResumeFile] = useState(null);
 
   const [jdFile, setJdFile] = useState(null);
@@ -35,6 +52,12 @@ const ResumeAnalysis = () => {
   };
 
   const handleAnalyze = async () => {
+    if (isGuest) {
+      setAnalysis(guestResumeAnalysis);
+      toast.success("Demo resume analysis loaded.");
+      return;
+    }
+
     if (!resumeFile) {
       toast.error("Please upload your resume.");
       return;

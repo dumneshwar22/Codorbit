@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import { useSearchParams } from "react-router-dom";
 
@@ -39,8 +39,12 @@ import SkillAnalysisCard from "../components/SkillAnalysisCard";
 import SectionHeader from "../components/ui/SectionHeader";
 import { BookOpen } from "lucide-react";
 import SEO from "../components/common/SEO";
+import { AuthContext } from "../context/AuthContext";
+import { guestDsaData } from "../data/guestData";
+import GuestFeatureLock from "../components/GuestFeatureLock";
 
 const DSATracker = () => {
+  const { isGuest } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   const [questions, setQuestions] = useState([]);
@@ -63,6 +67,7 @@ const DSATracker = () => {
   const [videoUrl, setVideoUrl] = useState(null);
 
   const [availableSheets, setAvailableSheets] = useState([]);
+  const [guestFeatureLockOpen, setGuestFeatureLockOpen] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -87,10 +92,33 @@ const DSATracker = () => {
   };
 
   useEffect(() => {
+    if (isGuest) {
+      setQuestions(guestDsaData.questions);
+      setProgress(guestDsaData.progress);
+      setSkillAnalysis(guestDsaData.skillAnalysis);
+      setCoach(guestDsaData.coach);
+      setActiveSheets(["Blind 75", "NeetCode 150"]);
+      setAvailableSheets([
+        {
+          name: "Blind 75",
+          description: "A popular interview-focused roadmap covering the most common data structures and algorithm patterns.",
+          roadmap: ["Arrays", "Graphs", "Trees", "Dynamic Programming"],
+        },
+        {
+          name: "NeetCode 150",
+          description: "A broad problem set designed to improve interview confidence across core patterns.",
+          roadmap: ["Arrays", "Graphs", "Trees", "Dynamic Programming"],
+        },
+      ]);
+      setSelectedSheet("Blind 75");
+      setLoading(false);
+      return;
+    }
+
     if (!selectedSheet) return;
 
     fetchData();
-  }, [selectedSheet]);
+  }, [selectedSheet, isGuest]);
 
   useEffect(() => {
     setSearchParams({
@@ -138,6 +166,12 @@ const DSATracker = () => {
   }, []);
 
   const handleToggle = async (question) => {
+    if (isGuest) {
+      setSelectedQuestion(question);
+      setGuestFeatureLockOpen(true);
+      return;
+    }
+
     try {
       await toggleQuestion({
         questionId: question._id,
@@ -156,6 +190,12 @@ const DSATracker = () => {
   };
 
   const handleBookmark = async (question) => {
+    if (isGuest) {
+      setSelectedQuestion(question);
+      setGuestFeatureLockOpen(true);
+      return;
+    }
+
     try {
       await toggleBookmark(question._id);
 
@@ -166,11 +206,22 @@ const DSATracker = () => {
   };
 
   const handleNotes = (question) => {
+    if (isGuest) {
+      setSelectedQuestion(question);
+      setGuestFeatureLockOpen(true);
+      return;
+    }
+
     setSelectedQuestion(question);
     setShowNotesModal(true);
   };
 
   const handleSaveNotes = async (questionId, notes) => {
+    if (isGuest) {
+      setShowNotesModal(false);
+      return;
+    }
+
     try {
       await updateNotes(questionId, notes);
 
@@ -347,16 +398,11 @@ const DSATracker = () => {
     return acc;
   }, {});
 
-  const currentSheet = availableSheets.find(
-    (sheet) => sheet.name === selectedSheet,
-  );
-  console.log("Selected Sheet:", selectedSheet);
+  const currentSheet = Array.isArray(availableSheets)
+    ? availableSheets.find((sheet) => sheet.name === selectedSheet) ||
+      (typeof availableSheets[0] === "object" ? availableSheets[0] : null)
+    : null;
 
-  console.log("Current Sheet:", currentSheet);
-
-  console.log("Roadmap:", currentSheet?.roadmap);
-
-  console.log("Grouped Modules:", Object.keys(groupedQuestions));
   const currentOrder = currentSheet?.roadmap || Object.keys(groupedQuestions);
 
   return (
@@ -546,6 +592,22 @@ const DSATracker = () => {
             </div>
           </div>
         )}
+        <GuestFeatureLock
+          open={guestFeatureLockOpen}
+          onClose={() => {
+            setGuestFeatureLockOpen(false);
+            setSelectedQuestion(null);
+          }}
+        />
+
+        <GuestFeatureLock
+          open={guestFeatureLockOpen}
+          onClose={() => {
+            setGuestFeatureLockOpen(false);
+            setSelectedQuestion(null);
+          }}
+        />
+
         <NotesModal
           isOpen={showNotesModal}
           question={selectedQuestion}

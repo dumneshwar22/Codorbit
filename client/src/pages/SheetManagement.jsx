@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import DashboardLayout from "../layouts/DashboardLayout";
 import Skeleton from "../components/skeletons/Skeleton";
@@ -8,8 +8,29 @@ import { getProfile, updateActiveSheets } from "../services/userService";
 
 import { getSheets } from "../services/dsaService";
 import SEO from "../components/common/SEO";
+import { AuthContext } from "../context/AuthContext";
+import GuestFeatureLock from "../components/GuestFeatureLock";
+
+const guestSheets = [
+  {
+    name: "Blind 75",
+    description: "A curated roadmap for interview-ready arrays, strings, trees, graphs, and dynamic programming patterns.",
+    roadmap: ["Arrays", "Graphs", "Trees", "Dynamic Programming"],
+  },
+  {
+    name: "NeetCode 150",
+    description: "A broad collection of modern coding interview problems with strong pattern coverage.",
+    roadmap: ["Arrays", "Graphs", "Trees", "Dynamic Programming"],
+  },
+  {
+    name: "Striver A2Z",
+    description: "A step-by-step roadmap for mastering DSA from foundation to advanced problem solving.",
+    roadmap: ["Arrays", "Hashing", "Greedy", "Graphs"],
+  },
+];
 
 const SheetManagement = () => {
+  const { isGuest } = useContext(AuthContext);
   const [selectedSheets, setSelectedSheets] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -17,9 +38,17 @@ const SheetManagement = () => {
   const [sheets, setSheets] = useState([]);
 
   const [expandedSheet, setExpandedSheet] = useState(null);
+  const [guestFeatureLockOpen, setGuestFeatureLockOpen] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
+      if (isGuest) {
+        setSelectedSheets(["Blind 75", "NeetCode 150"]);
+        setSheets(guestSheets);
+        setLoading(false);
+        return;
+      }
+
       try {
         const [profileRes, sheetsRes] = await Promise.all([
           getProfile(),
@@ -37,13 +66,18 @@ const SheetManagement = () => {
     };
 
     loadData();
-  }, []);
+  }, [isGuest]);
 
   const toggleRoadmap = (sheetName) => {
     setExpandedSheet(expandedSheet === sheetName ? null : sheetName);
   };
 
   const handleSheetToggle = async (sheetName) => {
+    if (isGuest) {
+      setGuestFeatureLockOpen(true);
+      return;
+    }
+
     try {
       let updatedSheets;
 
@@ -144,6 +178,11 @@ const SheetManagement = () => {
             />
           ))}
         </div>
+
+        <GuestFeatureLock
+          open={guestFeatureLockOpen}
+          onClose={() => setGuestFeatureLockOpen(false)}
+        />
       </DashboardLayout>
     </>
   );

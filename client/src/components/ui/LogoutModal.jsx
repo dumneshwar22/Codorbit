@@ -1,7 +1,14 @@
 import { createPortal } from "react-dom";
 import { LogOut } from "lucide-react";
 
-const LogoutModal = ({ isOpen, onCancel, onConfirm }) => {
+const LogoutModal = ({
+  isOpen,
+  onCancel,
+  onConfirm,
+  title = "Logout?",
+  description = "Are you sure you want to logout from CodOrbit?",
+  confirmLabel = "Logout",
+}) => {
   if (!isOpen) return null;
 
   return createPortal(
@@ -95,7 +102,7 @@ const LogoutModal = ({ isOpen, onCancel, onConfirm }) => {
           dark:text-white
           "
         >
-          Logout?
+          {title}
         </h2>
 
         {/* Description */}
@@ -112,8 +119,7 @@ const LogoutModal = ({ isOpen, onCancel, onConfirm }) => {
           dark:text-slate-400
           "
         >
-          Are you sure you want to logout from
-          CodOrbit?
+          {description}
         </p>
 
         {/* Buttons */}
@@ -171,7 +177,7 @@ const LogoutModal = ({ isOpen, onCancel, onConfirm }) => {
             transition-all
             "
           >
-            Logout
+            {confirmLabel}
           </button>
         </div>
       </div>

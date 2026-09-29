@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { toast } from "react-hot-toast";
 import githubLogo from "../assets/platforms/github.svg";
 import leetcodeLogo from "../assets/platforms/leetcode.svg";
@@ -22,6 +22,9 @@ import {
 } from "../services/profileService";
 import SectionHeader from "../components/ui/SectionHeader";
 import SEO from "../components/common/SEO";
+import { AuthContext } from "../context/AuthContext";
+import { guestProfileData } from "../data/guestData";
+import GuestFeatureLock from "../components/GuestFeatureLock";
 
 const inputClass = `
 w-full
@@ -47,6 +50,7 @@ const PlatformInputCard = ({
   value,
   placeholder,
   onChange,
+  disabled = false,
 }) => (
   <div
     className="
@@ -102,12 +106,16 @@ const PlatformInputCard = ({
       value={value || ""}
       onChange={onChange}
       placeholder={placeholder}
-      className={`${inputClass} flex-1`}
+      disabled={disabled}
+      className={`${inputClass} flex-1 ${disabled ? "cursor-not-allowed opacity-60" : ""}`}
     />
   </div>
 );
 
 const Profile = () => {
+  const { isGuest } = useContext(AuthContext);
+  const [guestFeatureLockOpen, setGuestFeatureLockOpen] = useState(false);
+
   const [formData, setFormData] = useState({
     username: "",
     name: "",
@@ -131,6 +139,12 @@ const Profile = () => {
   const [copied, setCopied] = useState(false);
 
   const fetchProfile = async () => {
+    if (isGuest) {
+      setFormData(guestProfileData);
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await getProfile();
 
@@ -144,7 +158,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [isGuest]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -168,6 +182,11 @@ const Profile = () => {
   };
 
   const handleImageUpload = async (e) => {
+    if (isGuest) {
+      setGuestFeatureLockOpen(true);
+      return;
+    }
+
     const file = e.target.files?.[0];
 
     if (!file) return;
@@ -198,16 +217,16 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (isGuest) {
+      setGuestFeatureLockOpen(true);
+      return;
+    }
+
     const toastId = toast.loading("Updating profile...");
 
     try {
-      // Save profile first
       await updateProfile(formData);
-
-      // Sync all connected platforms
       await syncAllPlatforms();
-
-      // Refresh profile so UI stays in sync
       await fetchProfile();
 
       toast.success("Profile updated successfully!", {
@@ -446,14 +465,16 @@ const Profile = () => {
           transition
           "
                   >
-                    {uploading ? "Uploading..." : "Change Photo"}
+                    {uploading ? "Uploading..." : isGuest ? "Demo Preview" : "Change Photo"}
 
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={handleImageUpload}
-                    />
+                    {!isGuest && (
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageUpload}
+                      />
+                    )}
                   </label>
 
                   <h3
@@ -521,6 +542,8 @@ const Profile = () => {
 
                   <button
                     type="submit"
+                    disabled={isGuest}
+                    onClick={isGuest ? () => setGuestFeatureLockOpen(true) : undefined}
                     className="
       shrink-0
 
@@ -542,9 +565,10 @@ const Profile = () => {
 
       transition-all
       shadow-sm
+      disabled:opacity-60
     "
                   >
-                    Save Changes
+                    {isGuest ? "Demo Preview" : "Save Changes"}
                   </button>
                 </div>
 
@@ -567,7 +591,8 @@ const Profile = () => {
                       value={formData.username || ""}
                       onChange={handleChange}
                       placeholder="Choose a unique username"
-                      className={`${inputClass} pl-11`}
+                      disabled={isGuest}
+                      className={`${inputClass} pl-11 ${isGuest ? "cursor-not-allowed opacity-60" : ""}`}
                     />
 
                     <div className="mt-2 flex items-center gap-2">
@@ -608,7 +633,8 @@ const Profile = () => {
                       value={formData.name || ""}
                       onChange={handleChange}
                       placeholder="Full Name"
-                      className={`${inputClass} pl-11`}
+                      disabled={isGuest}
+                      className={`${inputClass} pl-11 ${isGuest ? "cursor-not-allowed opacity-60" : ""}`}
                     />
                   </div>
 
@@ -623,7 +649,8 @@ const Profile = () => {
                       value={formData.college || ""}
                       onChange={handleChange}
                       placeholder="College"
-                      className={`${inputClass} pl-11`}
+                      disabled={isGuest}
+                      className={`${inputClass} pl-11 ${isGuest ? "cursor-not-allowed opacity-60" : ""}`}
                     />
                   </div>
 
@@ -638,7 +665,8 @@ const Profile = () => {
                       value={formData.branch || ""}
                       onChange={handleChange}
                       placeholder="Branch"
-                      className={`${inputClass} pl-11`}
+                      disabled={isGuest}
+                      className={`${inputClass} pl-11 ${isGuest ? "cursor-not-allowed opacity-60" : ""}`}
                     />
                   </div>
 
@@ -653,7 +681,8 @@ const Profile = () => {
                       value={formData.graduationYear || ""}
                       onChange={handleChange}
                       placeholder="Graduation Year"
-                      className={`${inputClass} pl-11`}
+                      disabled={isGuest}
+                      className={`${inputClass} pl-11 ${isGuest ? "cursor-not-allowed opacity-60" : ""}`}
                     />
                   </div>
                 </div>
@@ -682,6 +711,8 @@ const Profile = () => {
 
                 <button
                   type="submit"
+                  disabled={isGuest}
+                  onClick={isGuest ? () => setGuestFeatureLockOpen(true) : undefined}
                   className="
       shrink-0
 
@@ -703,9 +734,10 @@ const Profile = () => {
 
       transition-all
       shadow-sm
+      disabled:opacity-60
     "
                 >
-                  Save Changes
+                  {isGuest ? "Demo Preview" : "Save Changes"}
                 </button>
               </div>
 
@@ -717,6 +749,7 @@ const Profile = () => {
                   value={formData.githubUsername}
                   placeholder="GitHub Username"
                   onChange={handleChange}
+                  disabled={isGuest}
                 />
 
                 <PlatformInputCard
@@ -726,6 +759,7 @@ const Profile = () => {
                   value={formData.leetcodeUsername}
                   placeholder="LeetCode Username"
                   onChange={handleChange}
+                  disabled={isGuest}
                 />
 
                 <PlatformInputCard
@@ -735,6 +769,7 @@ const Profile = () => {
                   value={formData.codeforcesUsername}
                   placeholder="Codeforces Username"
                   onChange={handleChange}
+                  disabled={isGuest}
                 />
 
                 {/* <PlatformInputCard
@@ -762,6 +797,7 @@ const Profile = () => {
                   value={formData.codechefUsername}
                   placeholder="CodeChef Username"
                   onChange={handleChange}
+                  disabled={isGuest}
                 />
               </div>
             </div>
@@ -870,6 +906,10 @@ const Profile = () => {
           </div>
         </div>
       </DashboardLayout>
+      <GuestFeatureLock
+        open={guestFeatureLockOpen}
+        onClose={() => setGuestFeatureLockOpen(false)}
+      />
     </>
   );
 };

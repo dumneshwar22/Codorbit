@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import { GitBranch, Star, Code2, Trophy, Link2 } from "lucide-react";
 
@@ -36,8 +36,12 @@ import AIInsightsCard from "../components/AIInsightsCard";
 
 import SectionHeader from "../components/ui/SectionHeader";
 import SEO from "../components/common/SEO.jsx";
+import { AuthContext } from "../context/AuthContext";
+import { guestDashboardData } from "../data/guestData";
 
 const Dashboard = () => {
+  const { isGuest } = useContext(AuthContext);
+
   const [overview, setOverview] = useState(null);
 
   const [loading, setLoading] = useState(true);
@@ -57,6 +61,32 @@ const Dashboard = () => {
   const [aiInsights, setAIInsights] = useState("");
 
   const fetchDashboard = async () => {
+    if (isGuest) {
+      const guestHeatmap = {
+        coding: guestDashboardData.heatmap.values,
+        github: guestDashboardData.heatmap.values,
+      };
+
+      const guestStreaks = {
+        coding: { current: 18, longest: 24 },
+        github: { current: 14, longest: 21 },
+      };
+
+      setOverview(guestDashboardData.overview);
+      setStreaks(guestStreaks);
+      setInsights(guestDashboardData.insights);
+      setActivityCoach(guestDashboardData.coach);
+      setHeatmap(guestHeatmap);
+      setDeveloperScore({
+        overallScore: guestDashboardData.overview.developerScore,
+        grade: "Advanced",
+        description: "Demo profile: strong coding momentum and polished interview readiness.",
+      });
+      setAIInsights(guestDashboardData.aiInsights);
+      setLoading(false);
+      return;
+    }
+
     try {
       const data = await getDashboardOverview();
       const streakData = await getStreaks();
@@ -93,7 +123,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchDashboard();
-  }, []);
+  }, [isGuest]);
 
   if (loading) {
     return (

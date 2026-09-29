@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import DashboardLayout from "../layouts/DashboardLayout";
 import DSAOverviewPageSkeleton from "../components/skeletons/DSAOverviewPageSkeleton";
@@ -9,13 +9,22 @@ import SheetProgressCard from "../components/SheetProgressCard";
 
 import SectionHeader from "../components/ui/SectionHeader";
 import SEO from "../components/common/SEO";
+import { AuthContext } from "../context/AuthContext";
+import { guestDsaOverviewData } from "../data/guestData";
 
 const DSAOverview = () => {
+  const { isGuest } = useContext(AuthContext);
   const [overview, setOverview] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (isGuest) {
+        setOverview(guestDsaOverviewData);
+        setLoading(false);
+        return;
+      }
+
       try {
         const data = await getOverview();
 
@@ -28,7 +37,7 @@ const DSAOverview = () => {
     };
 
     fetchData();
-  }, []);
+  }, [isGuest]);
 
   if (loading) {
     return (

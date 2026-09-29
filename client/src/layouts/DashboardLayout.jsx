@@ -1,6 +1,7 @@
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import LandingFooter from "../components/landing/LandingFooter";
+import GuestBanner from "../components/GuestBanner";
 
 const DashboardLayout = ({ children }) => {
   return (
@@ -12,8 +13,6 @@ const DashboardLayout = ({ children }) => {
   dark:bg-slate-950
   "
     >
-      {/* Sidebar */}
-
       <div
         className="
         sticky
@@ -23,8 +22,6 @@ const DashboardLayout = ({ children }) => {
       >
         <Sidebar />
       </div>
-
-      {/* Content */}
 
       <div
         className="
@@ -46,15 +43,14 @@ const DashboardLayout = ({ children }) => {
             mx-auto
             "
           >
+            <GuestBanner />
             {children}
           </div>
         </main>
 
-        <LandingFooter/>
+        <LandingFooter />
       </div>
     </div>
-    
-
   );
 };
 

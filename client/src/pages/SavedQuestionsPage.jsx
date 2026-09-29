@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import DashboardLayout from "../layouts/DashboardLayout";
 import SectionHeader from "../components/ui/SectionHeader";
@@ -7,13 +7,40 @@ import SavedQuestions from "../components/SavedQuestions";
 
 import { getBookmarks } from "../services/dsaService";
 import SEO from "../components/common/SEO";
+import { AuthContext } from "../context/AuthContext";
+
+const guestBookmarks = [
+  {
+    _id: "guest-bookmark-1",
+    title: "Two Sum",
+    difficulty: "Easy",
+    module: "Arrays",
+    section: "Hashing",
+    sheetName: "Blind 75",
+  },
+  {
+    _id: "guest-bookmark-2",
+    title: "Course Schedule",
+    difficulty: "Medium",
+    module: "Graphs",
+    section: "Topological Sort",
+    sheetName: "NeetCode 150",
+  },
+];
 
 const SavedQuestionsPage = () => {
+  const { isGuest } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   const [bookmarks, setBookmarks] = useState([]);
 
   const fetchBookmarks = async () => {
+    if (isGuest) {
+      setBookmarks(guestBookmarks);
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await getBookmarks();
 
@@ -27,7 +54,7 @@ const SavedQuestionsPage = () => {
 
   useEffect(() => {
     fetchBookmarks();
-  }, []);
+  }, [isGuest]);
 
   if (loading) {
     return (

@@ -1,37 +1,34 @@
-import {
-  useContext,
-} from "react";
+import { useContext } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
-import {
-  Navigate,
-} from "react-router-dom";
+const guestAllowedRoutes = [
+  "/dashboard",
+  "/dsa-tracker",
+  "/analytics",
+  "/contests",
+  "/profile",
+  "/dsa-overview",
+  "/sheet-management",
+  "/resume-analysis",
+  "/saved-questions",
+];
 
-import {
-  AuthContext,
-} from "../context/AuthContext";
-
-const ProtectedRoute = ({
-  children,
-}) => {
-
-  const {
-    user,
-    loading,
-  } = useContext(
-    AuthContext
-  );
+const ProtectedRoute = ({ children }) => {
+  const { user, isGuest, loading } = useContext(AuthContext);
+  const location = useLocation();
 
   if (loading) {
-    return (
-      <h1>
-        Loading...
-      </h1>
-    );
+    return <h1>Loading...</h1>;
   }
 
-  return user
-    ? children
-    : <Navigate to="/" />;
+  const isGuestRoute = isGuest && guestAllowedRoutes.includes(location.pathname);
+
+  if (user || isGuestRoute) {
+    return children;
+  }
+
+  return <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;

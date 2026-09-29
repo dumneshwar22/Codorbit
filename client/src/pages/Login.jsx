@@ -18,7 +18,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const { theme } = useContext(ThemeContext);
-  const { login, loading: authLoading } = useContext(AuthContext);
+  const { login, continueAsGuest, loading: authLoading } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(false);
 
@@ -199,6 +199,20 @@ const Login = () => {
               text="continue_with"
               width="320"
             />
+          </div>
+
+          <div className="mt-4 flex justify-center">
+            <button
+              type="button"
+              onClick={() => {
+                continueAsGuest();
+                navigate("/dashboard");
+              }}
+              className="inline-flex h-10 w-[320px] items-center justify-center rounded-full border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:hover:bg-slate-800"
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Continue as Guest"}
+            </button>
           </div>
 
           {/* Why CodOrbit */}

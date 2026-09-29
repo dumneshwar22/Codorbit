@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import DashboardLayout from "../layouts/DashboardLayout";
 
@@ -14,14 +14,23 @@ import ScoreCard from "../components/ScoreCard";
 import SectionHeader from "../components/ui/SectionHeader";
 import PlatformCard from "../components/PlatformCard ";
 import SEO from "../components/common/SEO";
+import { AuthContext } from "../context/AuthContext";
+import { guestAnalyticsData } from "../data/guestData";
 
 const Analytics = () => {
+  const { isGuest } = useContext(AuthContext);
   const [analytics, setAnalytics] = useState(null);
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (isGuest) {
+        setAnalytics(guestAnalyticsData);
+        setLoading(false);
+        return;
+      }
+
       try {
         const data = await getAnalytics();
 
@@ -34,7 +43,7 @@ const Analytics = () => {
     };
 
     fetchData();
-  }, []);
+  }, [isGuest]);
 
   if (loading) {
     return (

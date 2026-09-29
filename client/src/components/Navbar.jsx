@@ -1,15 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 import ThemeToggle from "./ui/ThemeToggle";
 import { getProfile } from "../services/userService";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { isGuest } = useContext(AuthContext);
 
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    if (isGuest) {
+      setUser({ name: "Guest User", username: "guest-demo", profileImage: "" });
+      return;
+    }
+
     const loadProfile = async () => {
       try {
         const data = await getProfile();
@@ -21,9 +29,11 @@ const Navbar = () => {
     };
 
     loadProfile();
-  }, []);
+  }, [isGuest]);
 
   const firstName = user?.name?.trim()?.split(" ")[0] || "Developer";
+  const displayName = isGuest ? "Guest User" : firstName;
+  const secondaryText = isGuest ? "Demo Account" : "Profile";
 
   return (
     <header
@@ -154,8 +164,9 @@ const Navbar = () => {
               leading-none
               "
             >
-              {firstName}
+              {displayName}
             </p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{secondaryText}</p>
           </div>
         </button>
       </div>
